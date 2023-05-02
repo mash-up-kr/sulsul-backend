@@ -39,6 +39,9 @@ subprojects {
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 		testImplementation("io.projectreactor:reactor-test")
 
+		// springdoc-openapi
+		implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+
 		// testImplementation("org.springframework.security:spring-security-test")
 		// implementation("org.springframework.boot:spring-boot-starter-security")
 	}
