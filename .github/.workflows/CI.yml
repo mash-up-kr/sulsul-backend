@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -26,6 +26,9 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: 린트 체크
+        run: ./gradlew ktlintCheck
 
       - name: 빌드
         run: chmod +x gradlew && ./gradlew build
