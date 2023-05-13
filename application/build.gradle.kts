@@ -7,9 +7,14 @@ plugins {
     id("org.springframework.boot") version "3.0.6" apply false
     id("io.spring.dependency-management") version "1.1.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("application")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+application {
+    mainClass.set("will.of.d.sulsul.SulsulApplicationKt")
+}
 
 configurations {
     compileOnly {
@@ -31,6 +36,7 @@ subprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "application")
 
     dependencies {
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
