@@ -29,6 +29,9 @@
 * 상대방의 구현 방식을 존중하고, 의견이 있다면 approve와 함께 첨언한다. 구현의 어떠함은 approve를 막을 수 없다.
 
 # Conventions
-code convention: ktlint 사용. 각자 로컬에서 ./gradlew addKtlintFormatGitPreCommitHook 명령어 친다. (.editorconfig 파일 참조)
-pr convention: PR 요청 후 본인의 작업 내용에 풍부한 설명을 코멘트로 남겨둔다.  
-commit convention: https://gist.github.com/stephenparish/9941e89d80e2bc58a153
+* code convention
+  * ktlint 사용. 각자 로컬에서 ./gradlew addKtlintFormatGitPreCommitHook 명령어 친다. (.editorconfig 파일 참조)
+* pr convention
+  * PR 요청 후 본인의 작업 내용에 풍부한 설명을 코멘트로 남겨둔다.  
+* commit convention
+  * https://gist.github.com/stephenparish/9941e89d80e2bc58a153
