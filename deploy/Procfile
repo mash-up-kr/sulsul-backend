@@ -1,0 +1,1 @@
+web: java -jar -Duser.timezone=Asia/Seoul -Dspring.profiles.active=prod -Dserver.port=5000 ./application.jar | pwd | ls

@@ -31,4 +31,4 @@ jobs:
         run: ./gradlew ktlintCheck
 
       - name: 빌드
-        run: chmod +x gradlew && ./gradlew build
+        run: chmod +x gradlew && ./gradlew bootJar
