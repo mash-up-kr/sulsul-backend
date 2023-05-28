@@ -1,0 +1,37 @@
+files:
+  "/etc/awslogs/awslogs.conf":
+    mode: "000644"
+    owner: root
+    group: root
+    content: |
+      [agent]
+      region = ap-northeast-2
+
+      [logs]
+      # 로그 그룹 및 로그 스트림 설정
+      [[log-config]]
+      file = /var/app/current/logs/sulsul/info.log
+      datetime_format = "%Y-%m-%d %H:%M:%S"
+      log_group_name = /aws/elasticbeanstalk/sulsul-backend/application-info.log
+      log_stream_name = {current_time}
+
+      [[log-config]]
+      file = /var/app/current/logs/sulsul/debug.log
+      datetime_format = "%Y-%m-%d %H:%M:%S"
+      log_group_name = /aws/elasticbeanstalk/sulsul-backend/application-debug.log
+      log_stream_name = {current_time}
+
+      [[log-config]]
+      file = /var/app/current/logs/sulsul/application-error.log
+      datetime_format = "%Y-%m-%d %H:%M:%S"
+      log_group_name = /aws/elasticbeanstalk/sulsul-backend/application-error.log
+      log_stream_name = {current_time}
+
+commands:
+  01_set_log_stream_name:
+    command: |
+      current_time=$(date +%Y%m%d%H%M%S)
+      sed -i "s/{current_time}/$current_time/g;" /etc/awslogs/awslogs.conf
+  02_restart_agent:
+    command: "service amazon-cloudwatch-agent restart"
+
