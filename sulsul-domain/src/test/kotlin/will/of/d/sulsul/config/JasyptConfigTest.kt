@@ -13,7 +13,7 @@ import will.of.d.sulsul.SharedContext
  */
 @Disabled("암호화, 복호화 결과 확인을 위한 테스트이므로 비활성화")
 class JasyptConfigTest(
-        private val stringEncryptor: StringEncryptor,
+    private val stringEncryptor: StringEncryptor
 ) : SharedContext() {
 
     private val plainText: String = "mongodb+srv://sulsul-dev:H6RSZEZkQNxvTyX9@sulsul-dev.aipo4xo.mongodb.net/test?retryWrites=true&w=majority"
