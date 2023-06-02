@@ -1,0 +1,25 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      uri: ENC(/iY13+f2WuBQTX+7QF3/Yiysu2oQvJSgqo5B/ym1otJzIh16FGnXDp9/BQcSQVvO6ILPDC+GDC6beo62aYwYOvGhoseIOlOqIf7yiFJ2YwK/TrvptX2K36POB3nJnXsFBdOWkQ7IuLE/79paQS4OFwsjA4ow3gHV2RRqU+lGqML/F440AsY8/vF1Vxw1+uU3)
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      uri: {DEV_MONGO_URI}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  data:
+    mongodb:
+      uri: {PROD_MONGO_URI}
