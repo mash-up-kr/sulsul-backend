@@ -2,10 +2,7 @@ dependencies {
     implementation(project(":sulsul-domain"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
-//    implementation("org.springframework.boot:spring-boot-starter-security")
-
-    // mongodb
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    // implementation("org.springframework.boot:spring-boot-starter-security")
 
     // swagger
     // springdoc-openapi

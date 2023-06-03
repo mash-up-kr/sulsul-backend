@@ -1,9 +1,6 @@
 package will.of.d.sulsul
 
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.autoconfigure.SpringBootApplication
 
-// @SpringBootApplication
-@ComponentScan(basePackageClasses = [SulsulDomainApplication::class])
-@Configuration
+@SpringBootApplication
 class SulsulDomainApplication
