@@ -45,6 +45,8 @@ subprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("io.projectreactor:reactor-test")
+        implementation("org.springframework.boot:spring-boot-starter-web")
+
 
 //        // springdoc-openapi
 //        implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
