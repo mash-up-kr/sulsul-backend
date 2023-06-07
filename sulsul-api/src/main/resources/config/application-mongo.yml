@@ -4,7 +4,7 @@ spring:
       on-profile: local
   data:
     mongodb:
-      uri: ENC(/iY13+f2WuBQTX+7QF3/Yiysu2oQvJSgqo5B/ym1otJzIh16FGnXDp9/BQcSQVvO6ILPDC+GDC6beo62aYwYOvGhoseIOlOqIf7yiFJ2YwK/TrvptX2K36POB3nJnXsFBdOWkQ7IuLE/79paQS4OFwsjA4ow3gHV2RRqU+lGqML/F440AsY8/vF1Vxw1+uU3)
+      uri: ENC(OUEEZ+LRbc7Qe0BlKpv5KlnrQSOyUQXEieqqK3S8357IeCTjYeJLvURX1NreC/Tj91T0y59bxfTNIZjPLeX0Pg1RZD32La7BGj36vJ/+HWHBM7k2u3eb/pvR8Yz5xUwvi5E8MeOVUvMSg4O0RvjUJg0JYrV9veZ+K+xqzgEIU5H9PrCetuPt0e1ADzp8+XLd)
 
 ---
 spring:
@@ -13,7 +13,7 @@ spring:
       on-profile: dev
   data:
     mongodb:
-      uri: {DEV_MONGO_URI}
+      uri: ENC(OUEEZ+LRbc7Qe0BlKpv5KlnrQSOyUQXEieqqK3S8357IeCTjYeJLvURX1NreC/Tj91T0y59bxfTNIZjPLeX0Pg1RZD32La7BGj36vJ/+HWHBM7k2u3eb/pvR8Yz5xUwvi5E8MeOVUvMSg4O0RvjUJg0JYrV9veZ+K+xqzgEIU5H9PrCetuPt0e1ADzp8+XLd)
 
 ---
 spring:
@@ -22,4 +22,4 @@ spring:
       on-profile: prod
   data:
     mongodb:
-      uri: {PROD_MONGO_URI}
+      uri: ENC(MaDwtgqXKfWsJDzgcIxnGk5BtJloti0ah+8nh9FrCEfLt4aih0x6DXRaafEvr7Lv4GRPa73YzlEcPATO+X5OeZr4p7YU918IiSjQW94HUmDFeGCdBJBCeuVkzXeFM8WyXq9ccZwFkRzLSrCotHGIVt6yR1UaF1JLqzQF1sNzS/WSQ4nqu2B7WZKrPyQeKFIE)
