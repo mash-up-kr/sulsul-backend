@@ -11,7 +11,7 @@ import will.of.d.sulsul.log.Logger
 @Service
 class KakaoAuthService(
     @Qualifier("kakaoAuthWebClient")
-    private val kakaoAuthWebClient: WebClient,
+    private val kakaoAuthWebClient: WebClient
 ) {
 
     companion object : Logger
@@ -38,5 +38,5 @@ class KakaoAuthService(
 }
 
 data class AccessTokenInfo(
-    val id : Long,
+    val id: Long
 )

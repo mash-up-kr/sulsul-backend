@@ -5,7 +5,7 @@ import will.of.d.sulsul.log.Logger
 
 @Service
 class UserService(
-    private val userRepository: UserRepository,
+    private val userRepository: UserRepository
 ) {
 
     companion object : Logger

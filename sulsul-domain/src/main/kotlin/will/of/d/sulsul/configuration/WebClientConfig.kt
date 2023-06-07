@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient
 @Configuration
 class WebClientConfig {
     @Bean
-    fun kakaoAuthWebClient() : WebClient {
+    fun kakaoAuthWebClient(): WebClient {
         return WebClient.builder()
             .baseUrl("https://kapi.kakao.com")
             .build()

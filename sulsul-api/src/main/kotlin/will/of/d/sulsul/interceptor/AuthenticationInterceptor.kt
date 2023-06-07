@@ -6,15 +6,14 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import will.of.d.sulsul.auth.KakaoAuthService
-import will.of.d.sulsul.log.Logger
 import will.of.d.sulsul.user.UserService
 
 @Component
 class AuthenticationInterceptor(
     private val kakaoAuthService: KakaoAuthService,
-    private val userService: UserService,
+    private val userService: UserService
 ) : HandlerInterceptor {
-    
+
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val accessToken = request.getAccessToken()
         if (accessToken == null) {
@@ -26,19 +25,19 @@ class AuthenticationInterceptor(
             val tokenInfo = kakaoAuthService.getTokenInfo(accessToken)
             userService.getUser(tokenInfo.id) ?: userService.signup(tokenInfo.id)
             true
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), e.message)
             false
         }
     }
 
-    private fun HttpServletRequest.getAccessToken() : String? {
+    private fun HttpServletRequest.getAccessToken(): String? {
         return this.getHeader("Authorization")?.let { token ->
-                if (token.startsWith("Bearer ")) {
-                    token.replaceFirst("Bearer ", "")
-                } else {
-                    null
-                }
+            if (token.startsWith("Bearer ")) {
+                token.replaceFirst("Bearer ", "")
+            } else {
+                null
             }
+        }
     }
 }
