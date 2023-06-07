@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches:
-      - 'test/**'
+      - test/**
       - main
 
 jobs:
@@ -43,17 +43,19 @@ jobs:
 
       - name: 배포 압축 파일 생성
         run: |
+          sed "s/{JASYPT_SECRET}/${{ secrets.JASYPT_SECRET }}" > Procfile2
+          cat Procfile2
           cp ./sulsul-api/build/libs/application.jar ./deploy
           cd deploy && zip -r deploy.zip .
 
-      - name: 배포
-        uses: einaregilsson/beanstalk-deploy@v21
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: sulsul-server-eb-app
-          environment_name: sulsul-server-eb-env
-          version_label: sulsul-${{ vars.GITHUB_SHA }}-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2
-          deployment_package: ./deploy/deploy.zip
-          wait_for_deployment: false
+#      - name: 배포
+#        uses: einaregilsson/beanstalk-deploy@v21
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+#          application_name: sulsul-server-eb-app
+#          environment_name: sulsul-server-eb-env
+#          version_label: sulsul-${{ vars.GITHUB_SHA }}-${{steps.current-time.outputs.formattedTime}}
+#          region: ap-northeast-2
+#          deployment_package: ./deploy/deploy.zip
+#          wait_for_deployment: false
