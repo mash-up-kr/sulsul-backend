@@ -16,7 +16,7 @@ class JasyptConfigTest(
     private val stringEncryptor: StringEncryptor
 ) : SharedContext() {
 
-    private val plainText: String = "mongodb+srv://sulsul-dev:H6RSZEZkQNxvTyX9@sulsul-dev.aipo4xo.mongodb.net/test?retryWrites=true&w=majority"
+    private val plainText: String = "plain text"
 
     @Test
     fun execute() {

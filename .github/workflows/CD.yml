@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches:
-      - 'test/**'
+      - test/**
       - main
 
 jobs:
@@ -43,6 +43,7 @@ jobs:
 
       - name: 배포 압축 파일 생성
         run: |
+          sed -i 's/{JASYPT_SECRET}/${{ secrets.JASYPT_SECRET }}/' ./deploy/Procfile
           cp ./sulsul-api/build/libs/application.jar ./deploy
           cd deploy && zip -r deploy.zip .
 
