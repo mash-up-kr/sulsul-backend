@@ -17,7 +17,7 @@ class AuthenticationInterceptor(
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val accessToken = request.getAccessToken()
         if (accessToken == null) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "no token")
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "token is not exists or not bearer type")
             return false
         }
 
