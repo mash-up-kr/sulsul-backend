@@ -1,3 +1,5 @@
-spring:
-  profiles:
-    include: mongo
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.6
