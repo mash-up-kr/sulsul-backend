@@ -18,7 +18,7 @@ class KakaoAuthService(
 
     fun getTokenInfo(accessToken: String): AccessTokenInfo {
         return kakaoAuthWebClient.get().uri("/v1/user/access_token_info")
-            .header("Authorization", accessToken)
+            .header("Authorization", "Bearer $accessToken")
             .retrieve()
             .onStatus({ status -> (status.is5xxServerError || status.is4xxClientError) }) { response ->
                 val statusCode = response.statusCode()
