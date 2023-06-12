@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 import will.of.d.sulsul.auth.KakaoAuthService
+import will.of.d.sulsul.holder.UserContextHolder
 import will.of.d.sulsul.user.UserService
 
 @Component
@@ -23,7 +24,8 @@ class AuthenticationInterceptor(
 
         return try {
             val tokenInfo = kakaoAuthService.getTokenInfo(accessToken)
-            userService.getUser(tokenInfo.id) ?: userService.signup(tokenInfo.id)
+            val user = userService.getUser(tokenInfo.id) ?: userService.signup(tokenInfo.id)
+            UserContextHolder.set(user)
             true
         } catch (e: Exception) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), e.message)
