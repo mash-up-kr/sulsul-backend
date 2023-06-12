@@ -10,7 +10,7 @@ import will.of.d.sulsul.resolver.UserArgumentResolver
 @Configuration
 class WebMvcConfig(
     private val authenticationInterceptor: AuthenticationInterceptor,
-    private val userArgumentResolver: UserArgumentResolver,
+    private val userArgumentResolver: UserArgumentResolver
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authenticationInterceptor)

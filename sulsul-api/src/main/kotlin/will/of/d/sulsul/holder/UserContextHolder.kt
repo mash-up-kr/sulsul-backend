@@ -6,6 +6,6 @@ object UserContextHolder {
     private val holder = ThreadLocal<User>()
 
     fun get(): User? = holder.get()
-    fun set(user : User) = holder.set(user)
+    fun set(user: User) = holder.set(user)
     fun remove() = holder.remove()
 }
