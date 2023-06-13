@@ -1,11 +1,11 @@
-package will.of.d.sulsul.alcohol.enroll.domain
+package will.of.d.sulsul.alcohol.drinkingLimit.domain
 
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "enroll_alcohol")
-data class EnrollAlcohol(
+data class DrinkingLimit(
     @Id
     val id: ObjectId? = null,
     val userId: ObjectId,
