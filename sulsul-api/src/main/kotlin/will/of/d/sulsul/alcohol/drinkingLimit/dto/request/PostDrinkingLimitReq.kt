@@ -1,22 +1,30 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.request
 
-import org.bson.types.ObjectId
+import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
+import will.of.d.sulsul.exception.InvalidRequestException
 
 data class PostDrinkingLimitReq(
-    val userId: String,
-    val sojuCount: Int,
-    val beerCount: Int,
-    val alcoholAmount: Int = 0
-
-    // TODO : 주종 추가되면 주종 추가하기
+    val drinkType: String,
+    val drinkBottle: Int
 ) {
 
-    fun toDocument(alcoholAmount: Double): DrinkingLimit {
+    fun toDocument(kakaoUserId: Long, alcoholAmount: Double): DrinkingLimit {
+        if (drinkType != Drink.SOJU.name &&
+            drinkType != Drink.WINE.name &&
+            drinkType != Drink.BEER.name &&
+            drinkType != Drink.WHISKY.name &&
+            drinkType != Drink.KAOLIANG.name
+        ) {
+            throw InvalidRequestException("유효하지 않은 drink type 입니다 (valid : SOJU, WINE, BEER, WHISKY, KAOLIANG)")
+        }
+
+        if (drinkBottle < 0) throw InvalidRequestException("유효하지 않은 drink bottle 입니다")
+
         return DrinkingLimit(
-            userId = ObjectId(userId),
-            sojuCount = sojuCount,
-            beerCount = beerCount,
+            kakaoUserId = kakaoUserId,
+            drinkType = drinkType,
+            drinkBottle = drinkBottle,
             alcoholAmount = alcoholAmount
         )
     }

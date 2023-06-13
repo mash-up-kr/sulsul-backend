@@ -1,31 +1,42 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.service
 
-import org.assertj.core.api.Assertions.assertThat
-import org.bson.types.ObjectId
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
-import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
+import will.of.d.sulsul.SulsulApplicationTests
+import will.of.d.sulsul.alcohol.Drink
+import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.PostDrinkingLimitReq
+import will.of.d.sulsul.exception.InvalidRequestException
 
-@SpringBootTest
 class DrinkingLimitServiceTest(
-    @Autowired
-    private val drinkingLimitRepository: DrinkingLimitRepository
-) {
-    @Test
-    @DisplayName("주량 등록 잘 되는지 확인")
-    fun enrollAlcoholTest() {
-        // given
-        val randomUserId = "507f191e810c19729de860ea"
-        val document = DrinkingLimit(id = null, ObjectId(randomUserId), 1, 1)
+    private val drinkingLimitService: DrinkingLimitService
+) : SulsulApplicationTests() {
 
-        // when
-        val findDocument = drinkingLimitRepository.save(document)
+    @Test
+    @DisplayName("잘못된 Request (drinkType)에 InvalidRequestException 발생하는지 확인")
+    fun badRequestTestByDrinkType() {
+        // given
+        val randomKakaoUserId = 2015392L
+        val badRequest = PostDrinkingLimitReq(drinkType = "water", drinkBottle = 10)
 
         // then
-        assertThat(findDocument.id).isNotNull
-        assertThat(drinkingLimitRepository.findById(findDocument.id!!)).isNotNull
+        assertThrows(InvalidRequestException::class.java) {
+            // when
+            drinkingLimitService.save(randomKakaoUserId, badRequest)
+        }
+    }
+
+    @Test
+    @DisplayName("잘못된 Request (drinkBottle)에 InvalidRequestException 발생하는지 확인")
+    fun badRequestTestByDrinkBottle() {
+        // given
+        val randomKakaoUserId = 2015392L
+        val badRequest = PostDrinkingLimitReq(drinkType = Drink.WHISKY.name, drinkBottle = -1)
+
+        // then
+        assertThrows(InvalidRequestException::class.java) {
+            // when
+            drinkingLimitService.save(randomKakaoUserId, badRequest)
+        }
     }
 }
