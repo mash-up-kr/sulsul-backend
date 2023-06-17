@@ -14,7 +14,7 @@ class WebMvcConfig(
 ) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(authenticationInterceptor)
-            .excludePathPatterns("/health")
+            .excludePathPatterns("/health", "/swagger-ui/**", "/v3/api-docs/**")
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
