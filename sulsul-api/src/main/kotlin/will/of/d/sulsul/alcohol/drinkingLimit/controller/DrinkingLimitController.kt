@@ -2,6 +2,7 @@ package will.of.d.sulsul.alcohol.drinkingLimit.controller
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -21,7 +22,11 @@ class DrinkingLimitController(
 
     @Operation(summary = "주량 등록 API", description = "로그인 시, 주량을 등록할 때 호출하는 API")
     @PostMapping("")
-    fun save(@RequestBody body: PostDrinkingLimitReq, user: User): ResponseEntity<Any> {
+    fun save(
+        @RequestBody @Valid
+        body: PostDrinkingLimitReq,
+        user: User
+    ): ResponseEntity<Any> {
         var document = body.toDocument(kakaoUserId = user.kakaoUserId, alcoholAmount = 0.0)
         document = drinkingLimitService.save(document)
 

@@ -1,11 +1,14 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.request
 
+import jakarta.validation.constraints.Max
 import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.exception.InvalidRequestException
 
 data class PostDrinkingLimitReq(
     val drinkType: String,
+
+    @Max(0)
     val drinkBottle: Int
 ) {
 
