@@ -9,6 +9,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import will.of.d.sulsul.constant.MOCK_API
 import will.of.d.sulsul.constant.ROOT_PACKAGE
 
 @Configuration
@@ -43,10 +44,18 @@ class SwaggerConfig {
     }
 
     @Bean
-    fun groupedOpenApi(): GroupedOpenApi {
+    fun server(): GroupedOpenApi {
         return GroupedOpenApi.builder()
             .group("sulsul-api")
             .packagesToScan(ROOT_PACKAGE)
+            .build()
+    }
+
+    @Bean
+    fun mockAPI(): GroupedOpenApi {
+        return GroupedOpenApi.builder()
+            .group("mock-api")
+            .packagesToScan(MOCK_API)
             .build()
     }
 }
