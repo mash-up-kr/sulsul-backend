@@ -1,6 +1,7 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.service
 
 import org.springframework.stereotype.Service
+import org.springframework.validation.annotation.Validated
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
 
@@ -8,7 +9,7 @@ import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
 class DrinkingLimitService(
     private val drinkingLimitRepository: DrinkingLimitRepository
 ) {
-    fun save(drinkingLimit: DrinkingLimit): DrinkingLimit {
+    fun save(@Validated drinkingLimit: DrinkingLimit): DrinkingLimit {
         // TODO : 알코올 계산기 구현하고 추가하기
 
 //        val alcoholAmount = AlcoholCalculator.calculateAlcohol(sojuCount = body.sojuCount, beerCount = body.beerCount)
