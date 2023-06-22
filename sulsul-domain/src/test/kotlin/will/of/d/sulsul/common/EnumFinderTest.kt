@@ -7,11 +7,18 @@ import will.of.d.sulsul.alcohol.Drink
 class EnumFinderTest {
 
     @Test
-    fun findBy() {
-        var drink = Drink::drinkType findBy "소주"
+    fun findBySuccess() {
+        val drink = Drink::drinkType findBy "소주"
 
         assertThat(drink).isNotNull
         assertThat(drink!!.drinkType).isEqualTo("소주")
         assertThat(drink!!.alcoholContent).isEqualTo(16.9)
+    }
+
+    @Test
+    fun findByFail() {
+        val drink = Drink::drinkType findBy "강아지"
+
+        assertThat(drink).isNull()
     }
 }
