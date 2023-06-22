@@ -1,7 +1,9 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.service
 
+import jakarta.validation.ConstraintViolationException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import will.of.d.sulsul.SharedContext
@@ -31,28 +33,30 @@ class DrinkingLimitServiceTest(
             alcoholAmount = 0.0
         )
 
-//        // then
-//        Assertions.assertThrows(InvalidRequestException::class.java) {
-//            // when
-//            drinkingLimitService.save(randomKakaoUserId, badRequest)
-//        }
+        // then
+        Assertions.assertThrows(ConstraintViolationException::class.java) {
+            // when
+            drinkingLimitService.save(badRequest)
+        }
     }
 
     @Test
-    @DisplayName("잘못된 Request (drinkBottle)에 InvalidRequestException 발생하는지 확인")
+    @DisplayName("잘못된 Request (drinkBottle)에 MethodArgumentNotValidException 발생하는지 확인")
     fun badRequestTestByDrinkBottle() {
-//        // given
-//        val randomKakaoUserId = 2015392L
-//        val badRequest = DrinkingLimit(kakaoUserId = randomKakaoUserId,
-//            drinkType = "water",
-//            drinkBottle = 10,
-//            alcoholAmount = 0.0)
-//
-//        // then
-//        Assertions.assertThrows(InvalidRequestException::class.java) {
-//            // when
-//            drinkingLimitService.save(randomKakaoUserId, badRequest)
-//        }
+        // given
+        val randomKakaoUserId = 2015392L
+        val badRequest = DrinkingLimit(
+            kakaoUserId = randomKakaoUserId,
+            drinkType = "소주",
+            drinkBottle = -10,
+            alcoholAmount = 0.0
+        )
+
+        // then
+        Assertions.assertThrows(ConstraintViolationException::class.java) {
+            // when
+            drinkingLimitService.save(badRequest)
+        }
     }
 
     @Test
@@ -63,8 +67,7 @@ class DrinkingLimitServiceTest(
         val goodRequest = DrinkingLimit(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
-            drinkBottle = 10,
-            alcoholAmount = 0.0
+            drinkBottle = 10
         )
 
         // when
