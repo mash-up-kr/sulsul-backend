@@ -16,12 +16,12 @@ import java.net.URI
 @Tag(name = "주량 등록 컨트롤러")
 @RestController
 @RequestMapping("/api/v1")
-class DrinkingLimitController {
+class MockDrinkingLimitController {
 
     @Operation(summary = "주량 등록 페이지에서 호출해야 하는 API", description = "주종은 서버에서 관리할게요~")
     @GetMapping("/drinkingLimit")
     fun getDrinkingLimit(): GetDrinkingLimitRes {
-        return GetDrinkingLimitRes(drinkTypes = Drink.values().map { it.type })
+        return GetDrinkingLimitRes(drinkTypes = MockDrink.values().map { it.type })
     }
 
     data class GetDrinkingLimitRes(
@@ -53,32 +53,32 @@ class DrinkingLimitController {
             titleCardUrl = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/slow_villiage_soju.jpeg",
             drinkingLimit = listOf(
                 DrinkingLimitsRes(
-                    drinkType = Drink.SOJU.name,
-                    alcoholContent = Drink.SOJU.alcoholContent,
+                    drinkType = MockDrink.SOJU.name,
+                    alcoholContent = MockDrink.SOJU.alcoholContent,
                     drinkingLimit = "1잔",
                     userSelect = true
                 ),
                 DrinkingLimitsRes(
-                    drinkType = Drink.WHISKY.name,
-                    alcoholContent = Drink.WHISKY.alcoholContent,
+                    drinkType = MockDrink.WHISKY.name,
+                    alcoholContent = MockDrink.WHISKY.alcoholContent,
                     drinkingLimit = "1잔",
                     userSelect = false
                 ),
                 DrinkingLimitsRes(
-                    drinkType = Drink.WINE.name,
-                    alcoholContent = Drink.WINE.alcoholContent,
+                    drinkType = MockDrink.WINE.name,
+                    alcoholContent = MockDrink.WINE.alcoholContent,
                     drinkingLimit = "1잔",
                     userSelect = false
                 ),
                 DrinkingLimitsRes(
-                    drinkType = Drink.BEER.name,
-                    alcoholContent = Drink.BEER.alcoholContent,
+                    drinkType = MockDrink.BEER.name,
+                    alcoholContent = MockDrink.BEER.alcoholContent,
                     drinkingLimit = "1잔",
                     userSelect = false
                 ),
                 DrinkingLimitsRes(
-                    drinkType = Drink.KAOLIANG.name,
-                    alcoholContent = Drink.KAOLIANG.alcoholContent,
+                    drinkType = MockDrink.KAOLIANG.name,
+                    alcoholContent = MockDrink.KAOLIANG.alcoholContent,
                     drinkingLimit = "1잔",
                     userSelect = false
                 )
@@ -119,7 +119,7 @@ class DrinkingLimitController {
     )
 }
 
-enum class Drink(
+enum class MockDrink(
     val type: String,
     val alcoholContent: Double
 ) {
