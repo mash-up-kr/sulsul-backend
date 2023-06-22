@@ -1,18 +1,18 @@
 package will.of.d.sulsul.exceptionhandler
 
+import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import will.of.d.sulsul.exception.InvalidRequestException
 import will.of.d.sulsul.exception.Unauthorized
 import will.of.d.sulsul.exception.UserNotFoundException
 
 @RestControllerAdvice
 class SulSulExceptionHandler {
 
-    @ExceptionHandler(InvalidRequestException::class)
-    fun invalidRequestException(exception: InvalidRequestException): ResponseEntity<Any> {
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun invalidRequestException(exception: ConstraintViolationException): ResponseEntity<Any> {
         return ResponseEntity.badRequest().body(exception.message)
     }
 
