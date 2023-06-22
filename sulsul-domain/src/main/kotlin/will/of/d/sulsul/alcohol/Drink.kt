@@ -1,5 +1,8 @@
 package will.of.d.sulsul.alcohol
 
+import com.fasterxml.jackson.annotation.JsonFormat
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class Drink(
     val drinkType: String,
     val alcoholContent: Double

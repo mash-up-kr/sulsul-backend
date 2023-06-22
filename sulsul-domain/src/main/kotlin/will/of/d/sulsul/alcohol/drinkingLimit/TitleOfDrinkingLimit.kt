@@ -1,5 +1,8 @@
 package will.of.d.sulsul.alcohol.drinkingLimit
 
+import com.fasterxml.jackson.annotation.JsonFormat
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 enum class TitleOfDrinkingLimit(
     val title: String,
     val tier: String,
