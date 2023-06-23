@@ -2,8 +2,10 @@ package will.of.d.sulsul.mockapi
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,25 +21,37 @@ class MockDrinkingLimitController {
         val mockImageUrl = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/slow_villiage_soju.jpeg"
     }
 
-    @Operation(summary = "주종 조회 API", description = "drink amount 단위: ml, alcohol amount 단위: g")
+    @Operation(summary = "주종 조회 API", description = "drink amount 단위: ml, alcohol amount 단위: g. 하단에 Schemas DrinkDto 참고")
     @GetMapping("/drink")
-    fun drink(): List<DrinkDto> {
-        return MockDrink.values().map {
-            DrinkDto(
-                drinkType = it.type,
-                alcoholContent = it.alcoholContent,
-                bottleCapacity = it.bottleCapacity,
-                alcoholAmountPerGlass = it.alcoholAmountPerGlass,
-                glassCapacity = it.glassCapacity
-            )
-        }
+    fun drink(): GetDrinkRes {
+        return GetDrinkRes(
+            MockDrink.values().map {
+                DrinkDto(
+                    drinkType = it.type,
+                    alcoholPercentage = it.alcoholContent,
+                    bottleCapacity = it.bottleCapacity,
+                    alcoholAmountPerGlass = it.alcoholAmountPerGlass,
+                    glassCapacity = it.glassCapacity
+                )
+            }
+        )
     }
 
+    data class GetDrinkRes(
+        val drinks: List<DrinkDto>
+    )
+
+    @Schema(description = "술에 대한 정보")
     data class DrinkDto(
+        @Schema(description = "술의 종류. 소주, 와인, 고량주, 위스키, 맥주")
         val drinkType: String,
-        val alcoholContent: Double,
+        @Schema(description = "술 도수. 단위는 %")
+        val alcoholPercentage: Double,
+        @Schema(description = "술병 용액 양. 단위는 ml")
         val bottleCapacity: Int,
+        @Schema(description = "술잔에 포함된 알코올 양. 단위는 g")
         val alcoholAmountPerGlass: Double,
+        @Schema(description = "술잔 용약 양. 단위는 ml")
         val glassCapacity: Int
     )
 
@@ -226,65 +240,90 @@ class MockDrinkingLimitController {
     )
 
     @Operation(summary = "주량 측정 결과 조회 API", description = "유저의 주량 측정 결과를 DB에서 조회합니다.")
-    @GetMapping("/drinking/report")
-    fun getDrinkingReports(): List<DrinkingReportDto> {
-        return listOf(
-            DrinkingReportDto(
-                totalDrinkGlasses = 25,
-                averageAlcoholContent = 16.9,
-                drinkingDuration = "3시간 20분",
-                alcoholCalorie = 399,
-                drinks = listOf(
-                    DrinkingResultDto(
-                        drinkType = MockDrink.SOJU.name,
-                        glasses = 1
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.WHISKY.name,
-                        glasses = 1
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.WINE.name,
-                        glasses = 1
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.BEER.name,
-                        glasses = 1
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.KAOLIANG.name,
-                        glasses = 1
-                    )
-                )
-            ),
-            DrinkingReportDto(
-                totalDrinkGlasses = 50,
-                averageAlcoholContent = 110.9,
-                drinkingDuration = "1시간 20분",
-                alcoholCalorie = 222,
-                drinks = listOf(
-                    DrinkingResultDto(
-                        drinkType = MockDrink.SOJU.name,
-                        glasses = 4
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.WHISKY.name,
-                        glasses = 3
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.WINE.name,
-                        glasses = 2
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.BEER.name,
-                        glasses = 9
-                    ),
-                    DrinkingResultDto(
-                        drinkType = MockDrink.KAOLIANG.name,
-                        glasses = 0
-                    )
+    @GetMapping("/drinking/report/{id}")
+    fun getDrinkingReports(@PathVariable id: String): DrinkingReportDto {
+        return DrinkingReportDto(
+            totalDrinkGlasses = 25,
+            averageAlcoholContent = 16.9,
+            drinkingDuration = "3시간 20분",
+            alcoholCalorie = 399,
+            drinks = listOf(
+                DrinkingResultDto(
+                    drinkType = MockDrink.SOJU.name,
+                    glasses = 1
+                ),
+                DrinkingResultDto(
+                    drinkType = MockDrink.WHISKY.name,
+                    glasses = 1
+                ),
+                DrinkingResultDto(
+                    drinkType = MockDrink.WINE.name,
+                    glasses = 1
+                ),
+                DrinkingResultDto(
+                    drinkType = MockDrink.BEER.name,
+                    glasses = 1
+                ),
+                DrinkingResultDto(
+                    drinkType = MockDrink.KAOLIANG.name,
+                    glasses = 1
                 )
             )
         )
     }
+
+    @Operation(summary = "술약속 카드 조회 API", description = "유저의 술약속 카드를 DB에서 조회합니다.")
+    @GetMapping("/drinking/card")
+    fun getDrinkingCards(): GetDrinkingCardsDto {
+        return GetDrinkingCardsDto(
+            listOf(
+                DrinkingCardDto(
+                    drinkingReportId = "id1",
+                    cardImageUrl = mockImageUrl,
+                    drinks = listOf(
+                        DrinkingResultDto(
+                            drinkType = MockDrink.SOJU.name,
+                            glasses = 1
+                        ),
+                        DrinkingResultDto(
+                            drinkType = MockDrink.WHISKY.name,
+                            glasses = 1
+                        )
+                    ),
+                    drankDate = "2023-06-24T04:00:00Z",
+                    subTitleText = MockTitle.BRONZE.subText
+                ),
+                DrinkingCardDto(
+                    drinkingReportId = "id2",
+                    cardImageUrl = mockImageUrl,
+                    drinks = listOf(
+                        DrinkingResultDto(
+                            drinkType = MockDrink.KAOLIANG.name,
+                            glasses = 5
+                        ),
+                        DrinkingResultDto(
+                            drinkType = MockDrink.WINE.name,
+                            glasses = 1
+                        )
+                    ),
+                    drankDate = "2023-07-24T04:00:00Z",
+                    subTitleText = MockTitle.SILVER.subText
+                )
+            )
+        )
+    }
+
+    data class GetDrinkingCardsDto(
+        val cards: List<DrinkingCardDto>
+    )
+
+    @Schema(description = "술약속 카드에 표현될 데이터")
+    data class DrinkingCardDto(
+        val drinkingReportId: String,
+        val cardImageUrl: String,
+        val drinks: List<DrinkingResultDto>,
+        @Schema(description = "ISO 8601 포맷의 날짜 데이터. e.g. 2023-07-24T04:00:00Z")
+        val drankDate: String,
+        val subTitleText: String
+    )
 }
