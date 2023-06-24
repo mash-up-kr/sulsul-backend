@@ -216,24 +216,25 @@ class MockDrinkingLimitController {
                 DrinkingResultDto(
                     drinkType = MockDrink.KAOLIANG.name,
                     glasses = 1
-                )
+                ),
             ),
-            drankAt = LocalDateTime.now()
-
+            drankAt = "2021-08-20T15:00:00"
         )
     }
 
     data class PostDrinkingReportReq(
-        @Schema(description = "술 종류와 잔 수", example = "[{\"drinkType\":\"소주\", \"glasses\":1}]")
+        @Schema(description = "총 마신 잔 수", example = "4")
+        val totalGlasses: Int,
+        @Schema(description = "술 종류와 잔 수", example = "[{\"drinkType\":\"소주\", \"glasses\":4}]")
         val drinks: List<DrinkingResultDto>,
         @Schema(description = "술을 마신 시작 시간", example = "2021-08-20T15:00:00")
-        val drinkingStartTime: LocalDateTime,
-        @Schema(description = "술을 마신 종료 시간", example = "2021-08-20T21:00:00")
-        val drinkingEndTime: LocalDateTime
+        val drinkingStartTime: String,
+        @Schema(description = "술을 마신 종료 시간", example = "2021-08-20T18:20:00")
+        val drinkingEndTime: String
     )
 
     data class DrinkingReportDto(
-        @Schema(description = "유저가 총 마신 술의 잔", example = "25")
+        @Schema(description = "유저가 총 마신 술의 잔", example = "4")
         val totalDrinkGlasses: Int,
         @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16.9")
         val averageAlcoholContent: Double,
@@ -241,10 +242,10 @@ class MockDrinkingLimitController {
         val drinkingDuration: String,
         @Schema(description = "유저가 마신 술의 칼로리", example = "399")
         val alcoholCalorie: Int,
-        @Schema(description = "유저가 마신 술의 종류와 잔 수", example = "[{\"drinkType\":\"소주\",\"glasses\":1}]")
+        @Schema(description = "유저가 마신 술의 종류와 잔 수", example = "[{\"drinkType\":\"소주\",\"glasses\":4}]")
         val drinks: List<DrinkingResultDto>,
         @Schema(description = "유저가 마신 날짜", example = "2021-08-20T15:00:00")
-        val drankAt: LocalDateTime
+        val drankAt: String,
     )
 
     data class DrinkingResultDto(
@@ -282,7 +283,7 @@ class MockDrinkingLimitController {
                     glasses = 1
                 )
             ),
-            drankAt = LocalDateTime.now()
+            drankAt = "2021-08-20T15:00:00"
         )
     }
 
