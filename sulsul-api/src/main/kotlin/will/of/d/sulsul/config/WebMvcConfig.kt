@@ -16,6 +16,7 @@ class WebMvcConfig(
 //            .excludePathPatterns("/health")
 //            .excludePathPatterns("/api/v1/web/drinkingLimit")
 //            .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**")
+//            .excludePathPatterns("/share/**")
 //    }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

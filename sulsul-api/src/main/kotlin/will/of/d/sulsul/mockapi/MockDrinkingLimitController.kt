@@ -2,7 +2,10 @@ package will.of.d.sulsul.mockapi
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.user.User
 
-@Tag(name = "주량 등록 컨트롤러")
+@Tag(name = "Mock API 컨트롤러")
 @RestController
 @RequestMapping("/api/v1")
 class MockDrinkingLimitController {
@@ -108,37 +111,22 @@ class MockDrinkingLimitController {
     )
 
     @Operation(summary = "주량 등록 API", description = "주량을 DB에 저장합니다. 헤더에 토큰이 없으면 저장하지 않습니다.")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "주량 등록 성공", content = [Content(schema = Schema(implementation = DrinkingLimitDto::class))]),
+            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
     @PostMapping("/drinkingLimit")
     fun postDrinkingLimit(
         @Parameter(hidden = true) user: User?,
-        @RequestBody body: List<PostDrinkingLimitReq>
-    ): List<DrinkingLimitDto> {
-        return listOf(
-            DrinkingLimitDto(
-                drinkType = MockDrink.SOJU.name,
-                drinkingLimit = 5.0,
-                userSelect = true
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.WHISKY.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.WINE.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.BEER.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.KAOLIANG.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            )
+        @RequestBody body: PostDrinkingLimitReq
+    ): DrinkingLimitDto {
+        return DrinkingLimitDto(
+            drinkType = MockDrink.SOJU.type,
+            glass = 8,
+            totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
         )
     }
 
@@ -147,42 +135,80 @@ class MockDrinkingLimitController {
         val glass: Int
     )
 
+    @Schema(description = "주량 등록 시, response 되는 데이터")
     data class DrinkingLimitDto(
+        @Schema(description = "주종 이름을 나타내는 필드 ('소주', '맥주', '와인', '고량주','위스키'")
         val drinkType: String,
-        val drinkingLimit: Double,
-        val userSelect: Boolean
+        @Schema(description = "몇 잔 마셨는지를 나타내는 필드")
+        val glass: Int,
+        @Schema(description = "유저의 주량을 알코올 양으로 표현하는 필드 (단위 g)")
+        val totalAlcoholAmount: Double
     )
 
     @Operation(summary = "주량 조회 페이지 API", description = "DB에 저장된 유저의 주량 데이터를 제공")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "주량 조회 성공", content = [Content(schema = Schema(implementation = DrinkingLimitDto::class))]),
+            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
     @GetMapping("/drinkingLimit")
     fun getDrinkingLimit(
         @Parameter(hidden = true) user: User
-    ): List<DrinkingLimitDto> {
-        return listOf(
-            DrinkingLimitDto(
-                drinkType = MockDrink.SOJU.name,
-                drinkingLimit = 5.0,
-                userSelect = true
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.WHISKY.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.WINE.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.BEER.name,
-                drinkingLimit = 5.0,
-                userSelect = false
-            ),
-            DrinkingLimitDto(
-                drinkType = MockDrink.KAOLIANG.name,
-                drinkingLimit = 5.0,
-                userSelect = false
+    ): DrinkingLimitDto {
+        return DrinkingLimitDto(
+            drinkType = MockDrink.SOJU.type,
+            glass = 8,
+            totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
+        )
+    }
+
+    data class DrinkingLimitListDto(
+        val drinkList: List<DrinkingLimitDto>
+    )
+
+    @Operation(summary = "다른 주종별 주량 조회 API", description = "유저 주량으로 다양한 주종별 맥시멈 주량 조회 API (* response의 glass는 주종별 maxium glass 의미함")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "다른 주종별 주량 조회 성공", content = [Content(schema = Schema(implementation = DrinkingLimitListDto::class))]),
+            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
+    @GetMapping("/drinkingLimit/differentDrink")
+    fun getDifferentDrinkingLimit(
+        @Parameter(hidden = true) user: User
+    ): DrinkingLimitListDto {
+        val totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
+
+        return DrinkingLimitListDto(
+            drinkList = listOf(
+                DrinkingLimitDto(
+                    drinkType = MockDrink.SOJU.name,
+                    glass = 8,
+                    totalAlcoholAmount = totalAlcoholAmount
+                ),
+                DrinkingLimitDto(
+                    drinkType = MockDrink.BEER.name,
+                    glass = 24,
+                    totalAlcoholAmount = totalAlcoholAmount
+                ),
+                DrinkingLimitDto(
+                    drinkType = MockDrink.WINE.name,
+                    glass = 9,
+                    totalAlcoholAmount = totalAlcoholAmount
+                ),
+                DrinkingLimitDto(
+                    drinkType = MockDrink.WHISKY.name,
+                    glass = 4,
+                    totalAlcoholAmount = totalAlcoholAmount
+                ),
+                DrinkingLimitDto(
+                    drinkType = MockDrink.KAOLIANG.name,
+                    glass = 4,
+                    totalAlcoholAmount = totalAlcoholAmount
+                )
             )
         )
     }
