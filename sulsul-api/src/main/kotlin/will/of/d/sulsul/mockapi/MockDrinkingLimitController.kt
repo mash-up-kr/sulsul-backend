@@ -192,6 +192,7 @@ class MockDrinkingLimitController {
     @PostMapping("/drinkingReport")
     fun postDrinkingReport(@RequestBody body: PostDrinkingReportReq): DrinkingReportDto {
         return DrinkingReportDto(
+            id = "6481c97405e8335a58bc4337",
             totalDrinkGlasses = 25,
             averageAlcoholContent = 16.9,
             drinkingDuration = "3시간 20분",
@@ -224,7 +225,7 @@ class MockDrinkingLimitController {
 
     data class PostDrinkingReportReq(
         @Schema(description = "총 마신 잔 수", example = "4")
-        val totalGlasses: Int,
+        val totalDrinkGlasses: Int,
         @Schema(description = "술 종류와 잔 수", example = "[{\"drinkType\":\"소주\", \"glasses\":4}]")
         val drinks: List<DrinkingResultDto>,
         @Schema(description = "술을 마신 시작 시간", example = "2021-08-20T15:00:00")
@@ -234,6 +235,8 @@ class MockDrinkingLimitController {
     )
 
     data class DrinkingReportDto(
+        @Schema(description = "식별 id", example = "6481c97405e8335a58bc4337")
+        val id: String,
         @Schema(description = "유저가 총 마신 술의 잔", example = "4")
         val totalDrinkGlasses: Int,
         @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16.9")
@@ -257,6 +260,7 @@ class MockDrinkingLimitController {
     @GetMapping("/drinking/report/{id}")
     fun getDrinkingReports(@PathVariable id: String): DrinkingReportDto {
         return DrinkingReportDto(
+            id = "6481c97405e8335a58bc4337",
             totalDrinkGlasses = 25,
             averageAlcoholContent = 16.9,
             drinkingDuration = "3시간 20분",
