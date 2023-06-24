@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.user.User
-import java.time.LocalDateTime
 
 @Tag(name = "주량 등록 컨트롤러")
 @RestController
@@ -216,7 +215,7 @@ class MockDrinkingLimitController {
                 DrinkingResultDto(
                     drinkType = MockDrink.KAOLIANG.name,
                     glasses = 1
-                ),
+                )
             ),
             drankAt = "2021-08-20T15:00:00"
         )
@@ -245,7 +244,7 @@ class MockDrinkingLimitController {
         @Schema(description = "유저가 마신 술의 종류와 잔 수", example = "[{\"drinkType\":\"소주\",\"glasses\":4}]")
         val drinks: List<DrinkingResultDto>,
         @Schema(description = "유저가 마신 날짜", example = "2021-08-20T15:00:00")
-        val drankAt: String,
+        val drankAt: String
     )
 
     data class DrinkingResultDto(
