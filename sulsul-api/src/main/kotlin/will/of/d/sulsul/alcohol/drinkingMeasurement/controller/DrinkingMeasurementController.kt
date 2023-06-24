@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.PostDrinkingMeasurementReq
+import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
 import will.of.d.sulsul.alcohol.drinkingMeasurement.service.DrinkingMeasurementApplicationService
 
 @Tag(name = "주량 측정 컨트롤러")
@@ -18,8 +18,8 @@ class DrinkingMeasurementController(
 ) {
     @Operation(summary = "추량 측정 API")
     @PostMapping("")
-    fun save(@RequestBody postDrinkingMeasurementReq: PostDrinkingMeasurementReq): ResponseEntity<Any> {
-        val res = drinkingMeasurementApplicationService.measurement(1111L, postDrinkingMeasurementReq)
+    fun save(@RequestBody drinkingMeasurementReq: DrinkingMeasurementReq): ResponseEntity<Any> {
+        val res = drinkingMeasurementApplicationService.measurement(1111L, drinkingMeasurementReq)
         return ResponseEntity.ok(res)
     }
 }

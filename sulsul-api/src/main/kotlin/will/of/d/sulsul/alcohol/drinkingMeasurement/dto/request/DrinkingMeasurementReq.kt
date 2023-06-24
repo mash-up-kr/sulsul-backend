@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.DrinkingMeasurementDTO
 import java.time.LocalDateTime
 
-data class PostDrinkingMeasurementReq(
+data class DrinkingMeasurementReq(
     @field:NotBlank(message = "측정한 내역을 입력해주세요.")
     val drinks: List<DrinkingMeasurementDTO>,
 
@@ -12,5 +12,8 @@ data class PostDrinkingMeasurementReq(
     val drinkingStartTime: LocalDateTime,
 
     @field:NotBlank(message = "술자리가 끝난 시간을 입력해주세요.")
-    val drinkingEndTime: LocalDateTime
+    val drinkingEndTime: LocalDateTime,
+
+    @field:NotBlank(message = "유저가 마신 총 잔 수를 입력해주세요.")
+    val totalDrinkGlasses: Int
 )

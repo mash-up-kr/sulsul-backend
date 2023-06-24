@@ -5,37 +5,51 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
+import java.time.ZoneId
 
-enum class Drinks(
+class Drinks(
     val drinkType: String,
     val glasses: Int
-)
+) {
+    companion object {
+        fun from(drinkType: String, glasses: Int): Drinks {
+            return Drinks(
+                drinkType = drinkType,
+                glasses = glasses
+            )
+        }
+    }
+}
 
-@Document(collation = "drinking_measurement")
-class DrinkingMeasurement(
+@Document(collection = "drinking_measurement")
+data class DrinkingMeasurement(
     @Id
     val id: ObjectId? = null,
-    val userId: ObjectId,
+    val userId: Long,
     val drinkingDuration: String,
     val alcoholCalorie: Int,
     val averageAlcoholContent: Double,
-    val drinks: Drinks,
+    val drinks: List<Drinks>,
+    val totalDrinkGlasses: Int,
     @CreatedDate
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+
 ) {
     companion object {
         fun from(
-            userId: ObjectId,
+            userId: Long,
             drinkingDuration: String,
             alcoholCalorie: Int,
             averageAlcoholContent: Double,
-            drinks: Drinks
+            totalDrinkGlasses: Int,
+            drinks: List<Drinks>
         ): DrinkingMeasurement {
             return DrinkingMeasurement(
                 userId = userId,
                 drinkingDuration = drinkingDuration,
                 alcoholCalorie = alcoholCalorie,
                 averageAlcoholContent = averageAlcoholContent,
+                totalDrinkGlasses = totalDrinkGlasses,
                 drinks = drinks
             )
         }
