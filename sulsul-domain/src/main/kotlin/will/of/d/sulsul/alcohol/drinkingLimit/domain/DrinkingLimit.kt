@@ -5,9 +5,9 @@ import jakarta.validation.constraints.Min
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.TitleOfDrinkingLimit
 import will.of.d.sulsul.common.findBy
+import will.of.d.sulsul.drink.domain.Drink
 
 @Document(collection = "drinking_limit")
 data class DrinkingLimit(
@@ -22,7 +22,7 @@ data class DrinkingLimit(
 ) {
     @AssertTrue
     fun isValidDrinkType(): Boolean {
-        return Drink::drinkType findBy drinkType != null
+        return Drink::type findBy drinkType != null
     }
 
     companion object {

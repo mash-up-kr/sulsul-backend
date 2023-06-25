@@ -2,7 +2,7 @@ package will.of.d.sulsul.common
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import will.of.d.sulsul.alcohol.Drink
+import will.of.d.sulsul.drink.domain.Drink
 
 class EnumFinderTest {
 
