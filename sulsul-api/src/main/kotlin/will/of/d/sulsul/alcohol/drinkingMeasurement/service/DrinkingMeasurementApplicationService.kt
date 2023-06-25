@@ -6,6 +6,7 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.DrinkingMeasurement
 import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.Drinks
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
+import will.of.d.sulsul.exception.ReportNotFoundException
 import java.time.Duration
 
 @Service
@@ -53,5 +54,9 @@ class DrinkingMeasurementApplicationService(
         val document = DrinkingMeasurement.from(kakaoUserId, drinkingDuration, totalCalorie, averageAlcoholContent, totalDrinkGlasses, drinks.map { Drinks.from(it.drinkType, it.glasses) })
 
         return DrinkingMeasurementRes.of(drinkingMeasurementService.save(document))
+    }
+
+    fun getMeasurementReport(reportId: String): DrinkingMeasurementRes {
+        return drinkingMeasurementService.findById(reportId)?.let { DrinkingMeasurementRes.of(it) } ?: throw ReportNotFoundException("Report not found with id: $reportId")
     }
 }
