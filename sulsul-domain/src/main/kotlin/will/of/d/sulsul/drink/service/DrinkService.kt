@@ -9,7 +9,7 @@ class DrinkService {
 
     companion object : Logger
 
-    fun getDrinks(): Array<Drink> {
-        return Drink.values().also { log.debug("Return drinks.") }
+    fun getDrinks(): List<Drink> {
+        return Drink.values().toList().also { log.debug("Return drinks.") }
     }
 }

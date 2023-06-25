@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.drink.domain.Drink
+import will.of.d.sulsul.title.domain.Title
 import will.of.d.sulsul.user.User
 import java.time.LocalDateTime
 
@@ -25,43 +26,6 @@ class MockDrinkingLimitController {
     companion object {
         val mockImageUrl = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/slow_villiage_soju.jpeg"
     }
-
-    @Operation(summary = "칭호 조회 API", description = "칭호를 제공합니다")
-    @GetMapping("/drinkingLimit/title")
-    fun getDrinkingLimitTitle(): List<TitleDto> {
-        return MockTitle.values().map {
-            TitleDto(
-                titleText = it.text,
-                subTitleText = it.subText,
-                badgeImageUrl = it.badgeImageUrl,
-                cardImageUrl = it.cardImageUrl,
-                alcoholAmount = it.alcoholAmount
-            )
-        }
-    }
-
-    enum class MockTitle(
-        val text: String,
-        val subText: String,
-        val badgeImageUrl: String,
-        val cardImageUrl: String,
-        val alcoholAmount: Double
-    ) {
-        BRONZE("술요미", "귀엽네", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 7),
-        SILVER("술반인", "가자~", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 15),
-        GOLD("이쯤되면 술잘알", "술 좀 치네", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 23),
-        PLATINUM("알낳괴", "미쳤다", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 31),
-        DIAMOND("음주가무 천상계", "알콜 마스터", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 40),
-        MASTER("Alcohol God", "알콜 마스터", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 50_000)
-    }
-
-    data class TitleDto(
-        val titleText: String,
-        val subTitleText: String,
-        val badgeImageUrl: String,
-        val cardImageUrl: String,
-        val alcoholAmount: Double
-    )
 
     @Operation(summary = "주량 등록 API", description = "주량을 DB에 저장합니다. 헤더에 토큰이 없으면 저장하지 않습니다.")
     @ApiResponses(
@@ -288,7 +252,7 @@ class MockDrinkingLimitController {
                         )
                     ),
                     drankDate = "2023-06-24T04:00:00Z",
-                    subTitleText = MockTitle.BRONZE.subText
+                    subTitleText = Title.BRONZE.subText
                 ),
                 DrinkingCardDto(
                     drinkingReportId = "id2",
@@ -304,7 +268,7 @@ class MockDrinkingLimitController {
                         )
                     ),
                     drankDate = "2023-07-24T04:00:00Z",
-                    subTitleText = MockTitle.SILVER.subText
+                    subTitleText = Title.SILVER.subText
                 )
             )
         )
