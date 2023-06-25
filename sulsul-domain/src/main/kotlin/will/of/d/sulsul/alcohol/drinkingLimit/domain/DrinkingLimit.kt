@@ -3,11 +3,14 @@ package will.of.d.sulsul.alcohol.drinkingLimit.domain
 import jakarta.validation.constraints.AssertTrue
 import jakarta.validation.constraints.Min
 import org.bson.types.ObjectId
+import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.mongodb.core.mapping.Document
 import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.TitleOfDrinkingLimit
 import will.of.d.sulsul.common.findBy
+import java.time.LocalDateTime
 
 @Document(collection = "drinking_limit")
 data class DrinkingLimit(
@@ -18,7 +21,12 @@ data class DrinkingLimit(
 
     @field: Min(0)
     val glass: Int,
-    val alcoholAmount: Double = 0.0
+    val alcoholAmount: Double = 0.0,
+
+    @CreatedDate
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    @LastModifiedDate
+    val updatedDate: LocalDateTime = LocalDateTime.now()
 ) {
     @AssertTrue
     fun isValidDrinkType(): Boolean {

@@ -19,4 +19,8 @@ class DrinkingLimitService(
 
         return document
     }
+
+    fun findByUserId(kakaoUserId: Long): DrinkingLimit {
+        return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId)
+    }
 }

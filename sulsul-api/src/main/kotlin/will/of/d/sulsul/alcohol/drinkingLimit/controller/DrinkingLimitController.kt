@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -46,6 +47,22 @@ class DrinkingLimitController(
         )
 
         document = drinkingLimitService.save(document)
+
+        return ResponseEntity.ok(DrinkingLimitRes.of(document))
+    }
+
+    @Operation(summary = "주량 조회 API", description = "주량 조회할 때 호출하는 API")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "주량 조회 성공", content = [Content(schema = Schema(implementation = DrinkingLimitRes::class))]),
+            ApiResponse(responseCode = "400", description = "잘못된 요청 값", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
+    @GetMapping("")
+    fun get(@Parameter(hidden = true) user: User): ResponseEntity<Any> {
+        val document = drinkingLimitService.findByUserId(user.kakaoUserId)
 
         return ResponseEntity.ok(DrinkingLimitRes.of(document))
     }
