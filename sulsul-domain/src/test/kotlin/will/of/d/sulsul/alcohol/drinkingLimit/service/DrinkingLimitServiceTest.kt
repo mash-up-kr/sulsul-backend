@@ -29,7 +29,7 @@ class DrinkingLimitServiceTest(
         val badRequest = DrinkingLimit(
             kakaoUserId = randomKakaoUserId,
             drinkType = "물",
-            drinkBottle = 10,
+            glass = 10,
             alcoholAmount = 0.0
         )
 
@@ -48,7 +48,7 @@ class DrinkingLimitServiceTest(
         val badRequest = DrinkingLimit(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
-            drinkBottle = -10,
+            glass = -10,
             alcoholAmount = 0.0
         )
 
@@ -67,7 +67,7 @@ class DrinkingLimitServiceTest(
         val goodRequest = DrinkingLimit(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
-            drinkBottle = 10
+            glass = 10
         )
 
         // when

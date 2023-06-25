@@ -17,7 +17,7 @@ data class DrinkingLimit(
     val drinkType: String,
 
     @field: Min(0)
-    val drinkBottle: Int,
+    val glass: Int,
     val alcoholAmount: Double = 0.0
 ) {
     @AssertTrue
@@ -30,14 +30,14 @@ data class DrinkingLimit(
             return DrinkingLimit(
                 kakaoUserId = kakaoUserId,
                 drinkType = drinkType,
-                drinkBottle = drinkBottle,
+                glass = drinkBottle,
                 alcoholAmount = alcoholAmount
             )
         }
     }
 
     fun createTitle(): TitleOfDrinkingLimit {
-        return when (this.drinkBottle) {
+        return when (this.glass) {
             in 0..7 -> TitleOfDrinkingLimit.BRONZE
             in 8..15 -> TitleOfDrinkingLimit.SILVER
             in 16..23 -> TitleOfDrinkingLimit.GOLD
