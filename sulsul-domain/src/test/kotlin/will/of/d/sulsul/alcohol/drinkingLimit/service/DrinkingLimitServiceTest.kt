@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import will.of.d.sulsul.SharedContext
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
+import will.of.d.sulsul.drink.domain.Drink
 import java.time.format.DateTimeFormatter
 
 class DrinkingLimitServiceTest(
@@ -78,7 +78,7 @@ class DrinkingLimitServiceTest(
 
         // then
         assertThat(saveDocument).isNotNull
-        assertThat(saveDocument.drinkType).isEqualTo(Drink.SOJU.drinkType)
+        assertThat(saveDocument.drinkType).isEqualTo(Drink.SOJU.type)
     }
 
     @Test

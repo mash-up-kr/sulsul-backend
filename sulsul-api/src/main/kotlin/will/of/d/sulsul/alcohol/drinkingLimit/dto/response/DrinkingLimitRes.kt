@@ -1,9 +1,9 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.response
 
 import io.swagger.v3.oas.annotations.media.Schema
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.common.findBy
+import will.of.d.sulsul.drink.domain.Drink
 
 @Schema(description = "주량등록 시 받는 Response 형식")
 data class DrinkingLimitRes(
@@ -20,11 +20,11 @@ data class DrinkingLimitRes(
     companion object {
         fun of(drinkingLimit: DrinkingLimit): DrinkingLimitRes {
 //            val titleEnum: TitleOfDrinkingLimit = drinkingLimit.createTitle()
-            val drinkEnum: Drink? = Drink::drinkType findBy drinkingLimit.drinkType
+            val drinkEnum: Drink? = Drink::type findBy drinkingLimit.drinkType
 
             return DrinkingLimitRes(
 //                titleOfDrinkingLimit = titleEnum,
-                drinkType = drinkEnum!!.drinkType,
+                drinkType = drinkEnum!!.type,
                 glass = drinkingLimit.glass,
                 totalAlcoholAmount = drinkingLimit.alcoholAmount
             )
