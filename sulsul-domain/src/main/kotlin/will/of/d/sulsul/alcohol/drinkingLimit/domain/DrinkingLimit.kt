@@ -34,12 +34,14 @@ data class DrinkingLimit(
     }
 
     companion object {
-        fun from(kakaoUserId: Long, drinkType: String, drinkBottle: Int, alcoholAmount: Double = 0.0): DrinkingLimit {
+        fun from(kakaoUserId: Long, drinkType: String, drinkBottle: Int): DrinkingLimit {
+            // TODO = alcoholAmount 계산하는 로직 (Drink 필드 수정된 뒤, 고치기)
+
             return DrinkingLimit(
                 kakaoUserId = kakaoUserId,
                 drinkType = drinkType,
                 glass = drinkBottle,
-                alcoholAmount = alcoholAmount
+                alcoholAmount = 0.0
             )
         }
     }
