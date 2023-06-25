@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import will.of.d.sulsul.SharedContext
 import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
@@ -80,7 +82,7 @@ class DrinkingLimitServiceTest(
     }
 
     @Test
-    @DisplayName("주량이 잘 조회되는지 확인")
+    @DisplayName("가장 최근에 등록된 주량이 조회되는지 확인")
     fun findSuccess() {
         // given
         val randomKakaoUserId = 2015392L
@@ -103,5 +105,15 @@ class DrinkingLimitServiceTest(
 
         // then
         assertThat(findDocument.createdAt.format(formatter)).isEqualTo(latestDate.format(formatter))
+    }
+
+    @Test
+    @DisplayName("등록된 주량 없을 때에는 에러 발생시키는지 확인")
+    fun findNotFound() {
+        val randomKakaoUserId = 2015392L
+
+        assertThrows<NotFoundException> {
+            drinkingLimitService.findByUserId(randomKakaoUserId)
+        }
     }
 }

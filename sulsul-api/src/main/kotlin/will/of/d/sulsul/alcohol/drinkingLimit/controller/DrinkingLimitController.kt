@@ -57,6 +57,7 @@ class DrinkingLimitController(
             ApiResponse(responseCode = "200", description = "주량 조회 성공", content = [Content(schema = Schema(implementation = DrinkingLimitRes::class))]),
             ApiResponse(responseCode = "400", description = "잘못된 요청 값", content = [Content(schema = Schema(implementation = String::class))]),
             ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "404", description = "등록된 주량이 없을 경우, 404 반환", content = [Content(schema = Schema(implementation = String::class))]),
             ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
         ]
     )

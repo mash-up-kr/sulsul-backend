@@ -1,6 +1,7 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.service
 
 import jakarta.validation.Valid
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
@@ -21,6 +22,6 @@ class DrinkingLimitService(
     }
 
     fun findByUserId(kakaoUserId: Long): DrinkingLimit {
-        return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId)
+        return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId) ?: throw NotFoundException()
     }
 }
