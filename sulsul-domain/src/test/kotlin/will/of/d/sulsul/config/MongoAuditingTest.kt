@@ -2,6 +2,7 @@ package will.of.d.sulsul.config
 
 import org.assertj.core.api.Assertions.assertThat
 import org.bson.types.ObjectId
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.data.annotation.CreatedDate
@@ -15,6 +16,11 @@ import java.time.LocalDateTime
 class MongoAuditingTest(
     private val exampleRepository: ExampleRepository
 ) : SharedContext() {
+
+    @AfterEach
+    fun deleteAll() {
+        exampleRepository.deleteAll()
+    }
 
     @Test
     @DisplayName("MongoDB Auditing 확인")
