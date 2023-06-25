@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.user.User
+import java.time.LocalDateTime
 
 @Tag(name = "Mock API 컨트롤러")
 @RestController
@@ -215,8 +216,9 @@ class MockDrinkingLimitController {
 
     @Operation(summary = "주량 측정 보고서 생성 API", description = "주량 측정 후 측정 결과 보고서를 생성합니다.")
     @PostMapping("/drinkingReport")
-    fun postDrinkingReport(@RequestBody body: List<PostDrinkingReportReq>): DrinkingReportDto {
+    fun postDrinkingReport(@RequestBody body: PostDrinkingReportReq): DrinkingReportDto {
         return DrinkingReportDto(
+            id = "6481c97405e8335a58bc4337",
             totalDrinkGlasses = 25,
             averageAlcoholContent = 16.9,
             drinkingDuration = "3시간 20분",
@@ -242,22 +244,37 @@ class MockDrinkingLimitController {
                     drinkType = MockDrink.KAOLIANG.name,
                     glasses = 1
                 )
-            )
+            ),
+            drankAt = LocalDateTime.parse("2021-08-20T15:00:00")
         )
     }
 
     data class PostDrinkingReportReq(
+        @Schema(description = "총 마신 잔 수", example = "4")
+        val totalDrinkGlasses: Int,
+        @Schema(description = "술 종류와 잔 수", example = "[{\"drinkType\":\"소주\", \"glasses\":4}]")
         val drinks: List<DrinkingResultDto>,
-        val drinkingStartTime: String,
-        val drinkingEndTime: String
+        @Schema(description = "술을 마신 시작 시간", example = "2021-08-20T15:00:00")
+        val drinkingStartTime: LocalDateTime,
+        @Schema(description = "술을 마신 종료 시간", example = "2021-08-20T18:20:00")
+        val drinkingEndTime: LocalDateTime
     )
 
     data class DrinkingReportDto(
+        @Schema(description = "식별 id", example = "6481c97405e8335a58bc4337")
+        val id: String,
+        @Schema(description = "유저가 총 마신 술의 잔", example = "4")
         val totalDrinkGlasses: Int,
+        @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16.9")
         val averageAlcoholContent: Double,
+        @Schema(description = "유저가 술을 마신 시간", example = "3시간 20분")
         val drinkingDuration: String,
+        @Schema(description = "유저가 마신 술의 칼로리", example = "399")
         val alcoholCalorie: Int,
-        val drinks: List<DrinkingResultDto>
+        @Schema(description = "유저가 마신 술의 종류와 잔 수", example = "[{\"drinkType\":\"소주\",\"glasses\":4}]")
+        val drinks: List<DrinkingResultDto>,
+        @Schema(description = "유저가 마신 날짜", example = "2021-08-20T15:00:00")
+        val drankAt: LocalDateTime
     )
 
     data class DrinkingResultDto(
@@ -269,6 +286,7 @@ class MockDrinkingLimitController {
     @GetMapping("/drinking/report/{id}")
     fun getDrinkingReports(@PathVariable id: String): DrinkingReportDto {
         return DrinkingReportDto(
+            id = "6481c97405e8335a58bc4337",
             totalDrinkGlasses = 25,
             averageAlcoholContent = 16.9,
             drinkingDuration = "3시간 20분",
@@ -294,7 +312,8 @@ class MockDrinkingLimitController {
                     drinkType = MockDrink.KAOLIANG.name,
                     glasses = 1
                 )
-            )
+            ),
+            drankAt = LocalDateTime.parse("2021-08-20T15:00:00")
         )
     }
 
