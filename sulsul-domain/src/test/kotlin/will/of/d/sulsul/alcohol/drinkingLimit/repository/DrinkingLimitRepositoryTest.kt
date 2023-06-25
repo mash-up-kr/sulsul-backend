@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import will.of.d.sulsul.SharedContext
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
+import will.of.d.sulsul.drink.domain.Drink
 
 class DrinkingLimitRepositoryTest(
     private val drinkingLimitRepository: DrinkingLimitRepository

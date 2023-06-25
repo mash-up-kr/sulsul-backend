@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import will.of.d.sulsul.drink.domain.Drink
 
 @Tag(name = "(공유) Mock API 컨트롤러")
 @RestController
@@ -26,9 +27,9 @@ class MockShareController {
     @GetMapping("/drinkingLimit")
     fun shareDrinkingLimit(@RequestParam(required = true) token: Long): MockDrinkingLimitController.DrinkingLimitDto {
         return MockDrinkingLimitController.DrinkingLimitDto(
-            drinkType = MockDrinkingLimitController.MockDrink.SOJU.name,
+            drinkType = Drink.SOJU.name,
             glass = 8,
-            totalAlcoholAmount = MockDrinkingLimitController.MockDrink.SOJU.alcoholAmountPerGlass * 8
+            totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
         )
     }
 }

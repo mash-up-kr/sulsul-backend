@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import will.of.d.sulsul.drink.domain.Drink
 import will.of.d.sulsul.user.User
 import java.time.LocalDateTime
 
@@ -23,55 +24,6 @@ class MockDrinkingLimitController {
 
     companion object {
         val mockImageUrl = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/slow_villiage_soju.jpeg"
-    }
-
-    @Operation(summary = "주종 조회 API", description = "drink amount 단위: ml, alcohol amount 단위: g. 하단에 Schemas DrinkDto 참고")
-    @GetMapping("/drink")
-    fun drink(): GetDrinkRes {
-        return GetDrinkRes(
-            MockDrink.values().map {
-                DrinkDto(
-                    drinkType = it.type,
-                    alcoholPercentage = it.alcoholContent,
-                    bottleCapacity = it.bottleCapacity,
-                    alcoholAmountPerGlass = it.alcoholAmountPerGlass,
-                    glassCapacity = it.glassCapacity
-                )
-            }
-        )
-    }
-
-    data class GetDrinkRes(
-        val drinks: List<DrinkDto>
-    )
-
-    @Schema(description = "술에 대한 정보")
-    data class DrinkDto(
-        @Schema(description = "술의 종류. 소주, 와인, 고량주, 위스키, 맥주")
-        val drinkType: String,
-        @Schema(description = "술 도수. 단위는 %")
-        val alcoholPercentage: Double,
-        @Schema(description = "술병 용액 양. 단위는 ml")
-        val bottleCapacity: Int,
-        @Schema(description = "술잔에 포함된 알코올 양. 단위는 g")
-        val alcoholAmountPerGlass: Double,
-        @Schema(description = "술잔 용약 양. 단위는 ml")
-        val glassCapacity: Int
-    )
-
-    enum class MockDrink(
-        val type: String,
-        val alcoholContent: Double,
-        val bottleCapacity: Int, // ml
-        val alcoholAmountPerGlass: Double, // gram
-        val glassCapacity: Int // ml
-    ) {
-        SOJU("소주", 16.9, 350, 6.7, 50),
-        WINE("와인", 14.0, 750, 16.6, 150),
-        BEER("맥주", 4.5, 500, 5.3, 150),
-        WHISKY("위스키", 35.0, 700, 8.3, 30),
-        KAOLIANG("고량주", 34.0, 500, 9.0, 25)
-        ;
     }
 
     @Operation(summary = "칭호 조회 API", description = "칭호를 제공합니다")
@@ -95,12 +47,12 @@ class MockDrinkingLimitController {
         val cardImageUrl: String,
         val alcoholAmount: Double
     ) {
-        BRONZE("술요미", "귀엽네", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholAmountPerGlass * 7),
-        SILVER("술반인", "가자~", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholAmountPerGlass * 15),
-        GOLD("이쯤되면 술잘알", "술 좀 치네", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholAmountPerGlass * 23),
-        PLATINUM("알낳괴", "미쳤다", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholContent * 31),
-        DIAMOND("음주가무 천상계", "알콜 마스터", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholContent * 40),
-        MASTER("Alcohol God", "알콜 마스터", mockImageUrl, mockImageUrl, MockDrink.SOJU.alcoholContent * 50_000)
+        BRONZE("술요미", "귀엽네", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 7),
+        SILVER("술반인", "가자~", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 15),
+        GOLD("이쯤되면 술잘알", "술 좀 치네", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholAmountPerGlass * 23),
+        PLATINUM("알낳괴", "미쳤다", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 31),
+        DIAMOND("음주가무 천상계", "알콜 마스터", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 40),
+        MASTER("Alcohol God", "알콜 마스터", mockImageUrl, mockImageUrl, Drink.SOJU.alcoholPercentage * 50_000)
     }
 
     data class TitleDto(
@@ -125,9 +77,9 @@ class MockDrinkingLimitController {
         @RequestBody body: PostDrinkingLimitReq
     ): DrinkingLimitDto {
         return DrinkingLimitDto(
-            drinkType = MockDrink.SOJU.type,
+            drinkType = Drink.SOJU.type,
             glass = 8,
-            totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
+            totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
         )
     }
 
@@ -159,9 +111,9 @@ class MockDrinkingLimitController {
         @Parameter(hidden = true) user: User
     ): DrinkingLimitDto {
         return DrinkingLimitDto(
-            drinkType = MockDrink.SOJU.type,
+            drinkType = Drink.SOJU.type,
             glass = 8,
-            totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
+            totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
         )
     }
 
@@ -181,32 +133,32 @@ class MockDrinkingLimitController {
     fun getDifferentDrinkingLimit(
         @Parameter(hidden = true) user: User
     ): DrinkingLimitListDto {
-        val totalAlcoholAmount = MockDrink.SOJU.alcoholAmountPerGlass * 8
+        val totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
 
         return DrinkingLimitListDto(
             drinkList = listOf(
                 DrinkingLimitDto(
-                    drinkType = MockDrink.SOJU.name,
+                    drinkType = Drink.SOJU.name,
                     glass = 8,
                     totalAlcoholAmount = totalAlcoholAmount
                 ),
                 DrinkingLimitDto(
-                    drinkType = MockDrink.BEER.name,
+                    drinkType = Drink.BEER.name,
                     glass = 24,
                     totalAlcoholAmount = totalAlcoholAmount
                 ),
                 DrinkingLimitDto(
-                    drinkType = MockDrink.WINE.name,
+                    drinkType = Drink.WINE.name,
                     glass = 9,
                     totalAlcoholAmount = totalAlcoholAmount
                 ),
                 DrinkingLimitDto(
-                    drinkType = MockDrink.WHISKY.name,
+                    drinkType = Drink.WHISKY.name,
                     glass = 4,
                     totalAlcoholAmount = totalAlcoholAmount
                 ),
                 DrinkingLimitDto(
-                    drinkType = MockDrink.KAOLIANG.name,
+                    drinkType = Drink.KAOLIANG.name,
                     glass = 4,
                     totalAlcoholAmount = totalAlcoholAmount
                 )
@@ -225,23 +177,23 @@ class MockDrinkingLimitController {
             alcoholCalorie = 399,
             drinks = listOf(
                 DrinkingResultDto(
-                    drinkType = MockDrink.SOJU.name,
+                    drinkType = Drink.SOJU.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.WHISKY.name,
+                    drinkType = Drink.WHISKY.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.WINE.name,
+                    drinkType = Drink.WINE.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.BEER.name,
+                    drinkType = Drink.BEER.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.KAOLIANG.name,
+                    drinkType = Drink.KAOLIANG.name,
                     glasses = 1
                 )
             ),
@@ -293,23 +245,23 @@ class MockDrinkingLimitController {
             alcoholCalorie = 399,
             drinks = listOf(
                 DrinkingResultDto(
-                    drinkType = MockDrink.SOJU.name,
+                    drinkType = Drink.SOJU.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.WHISKY.name,
+                    drinkType = Drink.WHISKY.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.WINE.name,
+                    drinkType = Drink.WINE.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.BEER.name,
+                    drinkType = Drink.BEER.name,
                     glasses = 1
                 ),
                 DrinkingResultDto(
-                    drinkType = MockDrink.KAOLIANG.name,
+                    drinkType = Drink.KAOLIANG.name,
                     glasses = 1
                 )
             ),
@@ -327,11 +279,11 @@ class MockDrinkingLimitController {
                     cardImageUrl = mockImageUrl,
                     drinks = listOf(
                         DrinkingResultDto(
-                            drinkType = MockDrink.SOJU.name,
+                            drinkType = Drink.SOJU.name,
                             glasses = 1
                         ),
                         DrinkingResultDto(
-                            drinkType = MockDrink.WHISKY.name,
+                            drinkType = Drink.WHISKY.name,
                             glasses = 1
                         )
                     ),
@@ -343,11 +295,11 @@ class MockDrinkingLimitController {
                     cardImageUrl = mockImageUrl,
                     drinks = listOf(
                         DrinkingResultDto(
-                            drinkType = MockDrink.KAOLIANG.name,
+                            drinkType = Drink.KAOLIANG.name,
                             glasses = 5
                         ),
                         DrinkingResultDto(
-                            drinkType = MockDrink.WINE.name,
+                            drinkType = Drink.WINE.name,
                             glasses = 1
                         )
                     ),

@@ -1,9 +1,9 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.response
 
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingLimit.TitleOfDrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.common.findBy
+import will.of.d.sulsul.drink.domain.Drink
 
 data class DrinkingLimitRes(
     val titleOfDrinkingLimit: TitleOfDrinkingLimit,
@@ -13,7 +13,7 @@ data class DrinkingLimitRes(
     companion object {
         fun of(drinkingLimit: DrinkingLimit): DrinkingLimitRes {
             val titleEnum: TitleOfDrinkingLimit = drinkingLimit.createTitle()
-            val drinkEnum: Drink? = Drink::drinkType findBy drinkingLimit.drinkType
+            val drinkEnum: Drink? = Drink::type findBy drinkingLimit.drinkType
 
             return DrinkingLimitRes(
                 titleOfDrinkingLimit = titleEnum,
