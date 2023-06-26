@@ -1,11 +1,9 @@
 package will.of.d.sulsul.alcohol.drinkingMeasurement.domain
 
 import org.bson.types.ObjectId
-import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
-import java.time.ZoneId
 
 class Drinks(
     val drinkType: String,
@@ -31,9 +29,7 @@ data class DrinkingMeasurement(
     val averageAlcoholContent: Double,
     val drinks: List<Drinks>,
     val totalDrinkGlasses: Int,
-    @CreatedDate
-    val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
-
+    val drankAt: LocalDateTime
 ) {
     companion object {
         fun from(
@@ -42,7 +38,8 @@ data class DrinkingMeasurement(
             alcoholCalorie: Int,
             averageAlcoholContent: Double,
             totalDrinkGlasses: Int,
-            drinks: List<Drinks>
+            drinks: List<Drinks>,
+            drankAt: LocalDateTime
         ): DrinkingMeasurement {
             return DrinkingMeasurement(
                 userId = userId,
@@ -50,7 +47,8 @@ data class DrinkingMeasurement(
                 alcoholCalorie = alcoholCalorie,
                 averageAlcoholContent = averageAlcoholContent,
                 totalDrinkGlasses = totalDrinkGlasses,
-                drinks = drinks
+                drinks = drinks,
+                drankAt = drankAt
             )
         }
     }

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
+import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.service.DrinkingMeasurementApplicationService
+import will.of.d.sulsul.user.User
 
 @Tag(name = "주량 측정 컨트롤러")
 @RestController
@@ -20,14 +22,14 @@ class DrinkingMeasurementController(
 ) {
     @Operation(summary = "추량 측정 보고서 생성 API")
     @PostMapping("")
-    fun save(@RequestBody drinkingMeasurementReq: DrinkingMeasurementReq): ResponseEntity<Any> {
-        val res = drinkingMeasurementApplicationService.measurement(1111L, drinkingMeasurementReq)
+    fun save(user: User, @RequestBody drinkingMeasurementReq: DrinkingMeasurementReq): ResponseEntity<DrinkingMeasurementRes> {
+        val res = drinkingMeasurementApplicationService.measurement(user.kakaoUserId, drinkingMeasurementReq)
         return ResponseEntity.ok(res)
     }
 
     @Operation(summary = "주량 측정 결과 조회 API")
     @GetMapping("/report/{reportId}")
-    fun getReport(@PathVariable reportId: String): ResponseEntity<Any> {
+    fun getReport(@PathVariable reportId: String): ResponseEntity<DrinkingMeasurementRes> {
         val res = drinkingMeasurementApplicationService.getMeasurementReport(reportId)
         return ResponseEntity.ok(res)
     }
