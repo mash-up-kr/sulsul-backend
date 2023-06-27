@@ -21,7 +21,7 @@ import will.of.d.sulsul.user.User
 
 @Tag(name = "주량등록 컨트롤러")
 @RestController
-@RequestMapping("/api/drinkingLimit")
+@RequestMapping("/api/v1/drinkingLimit")
 class DrinkingLimitController(
     private val drinkingLimitService: DrinkingLimitService
 ) {

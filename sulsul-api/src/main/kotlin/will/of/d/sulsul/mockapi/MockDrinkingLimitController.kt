@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.drink.domain.Drink
@@ -25,31 +23,6 @@ class MockDrinkingLimitController {
         val mockImageUrl = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/slow_villiage_soju.jpeg"
     }
 
-    @Operation(summary = "주량 등록 API", description = "주량을 DB에 저장합니다. 헤더에 토큰이 없으면 저장하지 않습니다.")
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "200", description = "주량 등록 성공", content = [Content(schema = Schema(implementation = DrinkingLimitDto::class))]),
-            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
-            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
-        ]
-    )
-    @PostMapping("/drinkingLimit")
-    fun postDrinkingLimit(
-        @Parameter(hidden = true) user: User?,
-        @RequestBody body: PostDrinkingLimitReq
-    ): DrinkingLimitDto {
-        return DrinkingLimitDto(
-            drinkType = Drink.SOJU.type,
-            glass = 8,
-            totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
-        )
-    }
-
-    data class PostDrinkingLimitReq(
-        val drinkType: String,
-        val glass: Int
-    )
-
     @Schema(description = "주량 등록 시, response 되는 데이터")
     data class DrinkingLimitDto(
         @Schema(description = "주종 이름을 나타내는 필드 ('소주', '맥주', '와인', '고량주','위스키'")
@@ -59,25 +32,6 @@ class MockDrinkingLimitController {
         @Schema(description = "유저의 주량을 알코올 양으로 표현하는 필드 (단위 g)")
         val totalAlcoholAmount: Double
     )
-
-    @Operation(summary = "주량 조회 페이지 API", description = "DB에 저장된 유저의 주량 데이터를 제공")
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "200", description = "주량 조회 성공", content = [Content(schema = Schema(implementation = DrinkingLimitDto::class))]),
-            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
-            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
-        ]
-    )
-    @GetMapping("/drinkingLimit")
-    fun getDrinkingLimit(
-        @Parameter(hidden = true) user: User
-    ): DrinkingLimitDto {
-        return DrinkingLimitDto(
-            drinkType = Drink.SOJU.type,
-            glass = 8,
-            totalAlcoholAmount = Drink.SOJU.alcoholAmountPerGlass * 8
-        )
-    }
 
     data class DrinkingLimitListDto(
         val drinkList: List<DrinkingLimitDto>
