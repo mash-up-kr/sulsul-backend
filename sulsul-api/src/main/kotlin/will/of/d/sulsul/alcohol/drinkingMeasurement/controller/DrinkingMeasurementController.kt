@@ -21,7 +21,7 @@ import will.of.d.sulsul.user.User
 
 @Tag(name = "주량 측정 컨트롤러")
 @RestController
-@RequestMapping("/api/v1/drinkingMeasurement")
+@RequestMapping("/api/v1/drinkingReport")
 class DrinkingMeasurementController(
     private val drinkingMeasurementApplicationService: DrinkingMeasurementApplicationService
 ) {
@@ -49,7 +49,7 @@ class DrinkingMeasurementController(
             ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
         ]
     )
-    @GetMapping("/report/{reportId}")
+    @GetMapping("/{reportId}")
     fun getReport(@PathVariable reportId: String): ResponseEntity<DrinkingMeasurementRes> {
         val res = drinkingMeasurementApplicationService.getMeasurementReport(reportId)
         return ResponseEntity.ok(res)
