@@ -2,6 +2,7 @@ package will.of.d.sulsul.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import will.of.d.sulsul.interceptor.AuthenticationInterceptor
 import will.of.d.sulsul.resolver.UserArgumentResolver
@@ -21,5 +22,11 @@ class WebMvcConfig(
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
         resolvers.add(userArgumentResolver)
+    }
+
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("*")
     }
 }
