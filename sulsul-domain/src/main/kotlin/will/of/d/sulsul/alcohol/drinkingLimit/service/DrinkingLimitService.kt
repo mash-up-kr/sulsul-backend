@@ -19,4 +19,8 @@ class DrinkingLimitService(
     fun findByUserId(kakaoUserId: Long): DrinkingLimit {
         return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId) ?: throw NotFoundException()
     }
+
+    fun getInShare(@Valid document: DrinkingLimit): DrinkingLimit {
+        return document
+    }
 }

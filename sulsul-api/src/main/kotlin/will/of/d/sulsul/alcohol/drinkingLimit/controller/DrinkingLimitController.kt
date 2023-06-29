@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
+import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.GetDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.PostDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.response.DrinkingLimitRes
 import will.of.d.sulsul.alcohol.drinkingLimit.service.DrinkingLimitService
@@ -47,6 +48,29 @@ class DrinkingLimitController(
         )
 
         document = drinkingLimitService.save(document)
+
+        return ResponseEntity.ok(DrinkingLimitRes.of(document))
+    }
+
+    @Operation(summary = "(공유) 주량 조회 API", description = "로그인 없이, 주량을 등록할 때 호출하는 API. 해당 API 는 DB에 저장하지 않고 클라이언트로부터 받은 값으로 바로 값 계산해서 보여주는 프로세스를 가진다")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "주량 등록 성공", content = [Content(schema = Schema(implementation = DrinkingLimitRes::class))]),
+            ApiResponse(responseCode = "400", description = "잘못된 요청 값", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
+    @GetMapping("/share")
+    fun getInShareMode(
+        @RequestBody body: GetDrinkingLimitReq
+    ): ResponseEntity<Any> {
+        var document = DrinkingLimit.from(
+            kakaoUserId = 0,
+            drinkType = body.drinkType,
+            drinkBottle = body.glass
+        )
+
+        document = drinkingLimitService.getInShare(document)
 
         return ResponseEntity.ok(DrinkingLimitRes.of(document))
     }
