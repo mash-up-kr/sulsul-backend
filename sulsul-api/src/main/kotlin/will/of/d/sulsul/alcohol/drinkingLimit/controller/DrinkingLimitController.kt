@@ -26,7 +26,7 @@ class DrinkingLimitController(
     private val drinkingLimitService: DrinkingLimitService
 ) {
 
-    @Operation(summary = "주량 등록 API", description = "로그인 시, 주량을 등록할 때 호출하는 API")
+    @Operation(summary = "주량 등록 API", description = "로그인 한 뒤, 토큰 정보와 같이 주량을 등록할 때 호출하는 API")
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "주량 등록 성공", content = [Content(schema = Schema(implementation = DrinkingLimitRes::class))]),
