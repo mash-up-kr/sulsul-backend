@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import io.swagger.v3.oas.models.servers.Server
 import org.springdoc.core.models.GroupedOpenApi
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import will.of.d.sulsul.constant.MOCK_API
@@ -21,7 +22,10 @@ import will.of.d.sulsul.constant.ROOT_PACKAGE
         version = "v0"
     )
 )
-class SwaggerConfig {
+class SwaggerConfig(
+    @Value("\${swagger.host.url}")
+    val serverHostUrl: String
+) {
 
     @Bean
     fun openApi(): OpenAPI {
@@ -40,7 +44,7 @@ class SwaggerConfig {
             )
 
         return OpenAPI()
-            .addServersItem(Server().url("/"))
+            .addServersItem(Server().url(serverHostUrl))
             .addSecurityItem(securityRequirement)
             .components(components)
     }
