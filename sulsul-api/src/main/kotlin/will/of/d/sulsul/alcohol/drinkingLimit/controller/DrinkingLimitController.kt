@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.GetDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.PostDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.response.DrinkingLimitRes
 import will.of.d.sulsul.alcohol.drinkingLimit.service.DrinkingLimitService
+import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 import will.of.d.sulsul.user.User
 
 @Tag(name = "주량등록 컨트롤러")
@@ -41,13 +41,13 @@ class DrinkingLimitController(
         @Parameter(hidden = true) user: User,
         @RequestBody body: PostDrinkingLimitReq
     ): ResponseEntity<Any> {
-        var document = DrinkingLimit.from(
+        val drinkingLimitVO = DrinkingLimitVO.from(
             kakaoUserId = user.kakaoUserId,
             drinkType = body.drinkType,
-            drinkBottle = body.glass
+            glass = body.glass
         )
 
-        document = drinkingLimitService.save(document)
+        val document = drinkingLimitService.save(drinkingLimitVO)
 
         return ResponseEntity.ok(DrinkingLimitRes.of(document))
     }
@@ -64,15 +64,15 @@ class DrinkingLimitController(
     fun getInShareMode(
         @RequestBody body: GetDrinkingLimitReq
     ): ResponseEntity<Any> {
-        var document = DrinkingLimit.from(
+        val drinkingLimitVO = DrinkingLimitVO.from(
             kakaoUserId = 0,
             drinkType = body.drinkType,
-            drinkBottle = body.glass
+            glass = body.glass
         )
 
-        document = drinkingLimitService.getInShare(document)
+        val temporaryDocument = drinkingLimitService.getInShare(drinkingLimitVO)
 
-        return ResponseEntity.ok(DrinkingLimitRes.of(document))
+        return ResponseEntity.ok(DrinkingLimitRes.of(temporaryDocument))
     }
 
     @Operation(summary = "주량 조회 API", description = "주량 조회할 때 호출하는 API")
