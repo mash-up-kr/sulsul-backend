@@ -8,7 +8,8 @@ import will.of.d.sulsul.drink.domain.Drink
 data class DrinkingLimitVO(
     val kakaoUserId: Long,
     val drinkType: String,
-    @field: Min(0)
+
+    @field:Min(value = 0)
     val glass: Int
 ) {
 

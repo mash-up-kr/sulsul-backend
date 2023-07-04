@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import will.of.d.sulsul.SharedContext
-import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
 import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
+import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 import will.of.d.sulsul.drink.domain.Drink
 import java.time.format.DateTimeFormatter
 
@@ -29,11 +29,10 @@ class DrinkingLimitServiceTest(
     fun badRequestTestByDrinkType() {
         // given
         val randomKakaoUserId = 2015392L
-        val badRequest = DrinkingLimit(
+        val badRequest = DrinkingLimitVO(
             kakaoUserId = randomKakaoUserId,
             drinkType = "물",
-            glass = 10,
-            alcoholAmount = 0.0
+            glass = 10
         )
 
         // then
@@ -44,15 +43,14 @@ class DrinkingLimitServiceTest(
     }
 
     @Test
-    @DisplayName("잘못된 Request (drinkBottle)에 MethodArgumentNotValidException 발생하는지 확인")
+    @DisplayName("잘못된 Request (glass)에 MethodArgumentNotValidException 발생하는지 확인")
     fun badRequestTestByDrinkBottle() {
         // given
         val randomKakaoUserId = 2015392L
-        val badRequest = DrinkingLimit(
+        val badRequest = DrinkingLimitVO(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
-            glass = -10,
-            alcoholAmount = 0.0
+            glass = -10
         )
 
         // then
@@ -67,7 +65,7 @@ class DrinkingLimitServiceTest(
     fun saveSuccess() {
         // given
         val randomKakaoUserId = 2015392L
-        val goodRequest = DrinkingLimit(
+        val goodRequest = DrinkingLimitVO(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
             glass = 10
@@ -86,7 +84,7 @@ class DrinkingLimitServiceTest(
     fun findSuccess() {
         // given
         val randomKakaoUserId = 2015392L
-        val goodRequest = DrinkingLimit(
+        val goodRequest = DrinkingLimitVO(
             kakaoUserId = randomKakaoUserId,
             drinkType = "소주",
             glass = 10

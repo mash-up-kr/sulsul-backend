@@ -16,7 +16,7 @@ class DrinkingLimitRepositoryTest(
     fun drinkLimitSuccessTest() {
         // given
         val randomKakaoUserId = 2015392L
-        val document = DrinkingLimit(id = null, kakaoUserId = randomKakaoUserId, Drink.SOJU.name, 10)
+        val document = DrinkingLimit(id = null, kakaoUserId = randomKakaoUserId, Drink.SOJU.name, glass = 10, alcoholAmount = 0.0)
 
         // when
         val findDocument = drinkingLimitRepository.save(document)
