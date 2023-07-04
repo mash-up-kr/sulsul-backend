@@ -1,13 +1,12 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.domain
 
-import jakarta.validation.constraints.AssertTrue
-import jakarta.validation.constraints.Min
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.mongodb.core.mapping.Document
 import will.of.d.sulsul.alcohol.drinkingLimit.TitleOfDrinkingLimit
+import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 import will.of.d.sulsul.common.findBy
 import will.of.d.sulsul.drink.domain.Drink
 import java.time.LocalDateTime
@@ -18,30 +17,23 @@ data class DrinkingLimit(
     val id: ObjectId? = null,
     val kakaoUserId: Long,
     val drinkType: String,
-
-    @field: Min(0)
     val glass: Int,
-    val alcoholAmount: Double = 0.0,
+    val alcoholAmount: Double,
 
     @CreatedDate
     val createdAt: LocalDateTime = LocalDateTime.now(),
     @LastModifiedDate
     val updatedDate: LocalDateTime = LocalDateTime.now()
 ) {
-    @AssertTrue
-    fun isValidDrinkType(): Boolean {
-        return Drink::type findBy drinkType != null
-    }
-
     companion object {
-        fun from(kakaoUserId: Long, drinkType: String, drinkBottle: Int): DrinkingLimit {
-            // TODO = alcoholAmount 계산하는 로직 (Drink 필드 수정된 뒤, 고치기)
+        fun from(drinkingLimitVO: DrinkingLimitVO): DrinkingLimit {
+            val drink: Drink? = Drink::type findBy drinkingLimitVO.drinkType
 
             return DrinkingLimit(
-                kakaoUserId = kakaoUserId,
-                drinkType = drinkType,
-                glass = drinkBottle,
-                alcoholAmount = 0.0
+                kakaoUserId = drinkingLimitVO.kakaoUserId,
+                drinkType = drinkingLimitVO.drinkType,
+                glass = drinkingLimitVO.glass,
+                alcoholAmount = drink!!.alcoholAmountPerGlass * drinkingLimitVO.glass
             )
         }
     }
