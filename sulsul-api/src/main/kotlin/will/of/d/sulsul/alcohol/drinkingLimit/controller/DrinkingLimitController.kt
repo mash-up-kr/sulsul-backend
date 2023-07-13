@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.GetDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.request.PostDrinkingLimitReq
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.response.DrinkingLimitRes
 import will.of.d.sulsul.alcohol.drinkingLimit.service.DrinkingLimitService
@@ -62,12 +62,13 @@ class DrinkingLimitController(
     )
     @GetMapping("/share")
     fun getInShareMode(
-        @RequestBody body: GetDrinkingLimitReq
+        @RequestParam("drinkType") drinkType: String,
+        @RequestParam("glass") glass: Int
     ): ResponseEntity<Any> {
         val drinkingLimitVO = DrinkingLimitVO.from(
             kakaoUserId = 0,
-            drinkType = body.drinkType,
-            glass = body.glass
+            drinkType = drinkType,
+            glass = glass
         )
 
         val temporaryDocument = drinkingLimitService.getInShare(drinkingLimitVO)
