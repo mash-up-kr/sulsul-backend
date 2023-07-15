@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import will.of.d.sulsul.exception.ReportNotFoundException
 import will.of.d.sulsul.exception.Unauthorized
 import will.of.d.sulsul.exception.UserNotFoundException
+import will.of.d.sulsul.log.Logger
 
 @RestControllerAdvice
 class SulSulExceptionHandler {
+
+    companion object : Logger
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun invalidRequestException(exception: ConstraintViolationException): ResponseEntity<Any> {
@@ -39,7 +42,8 @@ class SulSulExceptionHandler {
     }
 
     @ExceptionHandler(Exception::class)
-    fun exception(): ResponseEntity<Any> {
-        return ResponseEntity.internalServerError().build()
+    fun exception(e: Exception): ResponseEntity<Any> {
+        log.error("Unexpected error", e)
+        return ResponseEntity.internalServerError().body(e.message)
     }
 }

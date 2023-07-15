@@ -4,7 +4,7 @@ spring:
       on-profile: local
   data:
     mongodb:
-      uri: ENC(OUEEZ+LRbc7Qe0BlKpv5KlnrQSOyUQXEieqqK3S8357IeCTjYeJLvURX1NreC/Tj91T0y59bxfTNIZjPLeX0Pg1RZD32La7BGj36vJ/+HWHBM7k2u3eb/pvR8Yz5xUwvi5E8MeOVUvMSg4O0RvjUJg0JYrV9veZ+K+xqzgEIU5H9PrCetuPt0e1ADzp8+XLd)
+      uri: ENC(IQcA7jlFMGT1To24aRp3X2rXhXrUZnPU/vHGSRLtVa1QBJVZWpQkNWKrJk2v8aAemKIbcq/pJ+1jBod+0HpSSndIgKtDvEDPX6St1DIkAMg2H57sZUceq/sltI+XCAyiDkqyAin25eIkwQQCy99O/mH8abrSL7sXjx5XUOGa0ns=)
 
 ---
 spring:
@@ -13,7 +13,7 @@ spring:
       on-profile: dev
   data:
     mongodb:
-      uri: ENC(OUEEZ+LRbc7Qe0BlKpv5KlnrQSOyUQXEieqqK3S8357IeCTjYeJLvURX1NreC/Tj91T0y59bxfTNIZjPLeX0Pg1RZD32La7BGj36vJ/+HWHBM7k2u3eb/pvR8Yz5xUwvi5E8MeOVUvMSg4O0RvjUJg0JYrV9veZ+K+xqzgEIU5H9PrCetuPt0e1ADzp8+XLd)
+      uri: ENC(IQcA7jlFMGT1To24aRp3X2rXhXrUZnPU/vHGSRLtVa1QBJVZWpQkNWKrJk2v8aAemKIbcq/pJ+1jBod+0HpSSndIgKtDvEDPX6St1DIkAMg2H57sZUceq/sltI+XCAyiDkqyAin25eIkwQQCy99O/mH8abrSL7sXjx5XUOGa0ns=)
 
 ---
 spring:
@@ -22,4 +22,4 @@ spring:
       on-profile: prod
   data:
     mongodb:
-      uri: ENC(MaDwtgqXKfWsJDzgcIxnGk5BtJloti0ah+8nh9FrCEfLt4aih0x6DXRaafEvr7Lv4GRPa73YzlEcPATO+X5OeZr4p7YU918IiSjQW94HUmDFeGCdBJBCeuVkzXeFM8WyXq9ccZwFkRzLSrCotHGIVt6yR1UaF1JLqzQF1sNzS/WSQ4nqu2B7WZKrPyQeKFIE)
+      uri: ENC(IQcA7jlFMGT1To24aRp3X2rXhXrUZnPU/vHGSRLtVa1QBJVZWpQkNWKrJk2v8aAemKIbcq/pJ+1jBod+0HpSSndIgKtDvEDPX6St1DIkAMg2H57sZUceq/sltI+XCAyiDkqyAin25eIkwQQCy99O/mH8abrSL7sXjx5XUOGa0ns=)
