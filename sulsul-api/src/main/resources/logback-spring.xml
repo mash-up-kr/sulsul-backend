@@ -12,6 +12,7 @@
     </springProfile>
 
     <springProfile name="prod">
+        <logger name="will.of.d.sulsul" level="ERROR"/>
         <logger name="will.of.d.sulsul" level="DEBUG"/>
         <logger name="org.springframework.web" level="INFO"/>
 
