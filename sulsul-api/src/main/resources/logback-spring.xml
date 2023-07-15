@@ -76,7 +76,7 @@
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="INFO_FILE"/>
-            <appender-ref ref="WARN_FILE"/>
+            <appender-ref ref="DEBUG_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>
     </springProfile>
