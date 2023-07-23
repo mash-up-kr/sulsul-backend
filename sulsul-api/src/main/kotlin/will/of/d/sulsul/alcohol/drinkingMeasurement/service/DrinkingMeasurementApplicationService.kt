@@ -5,6 +5,7 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.DrinkingMeasurement
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementListRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
+import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementSummaryRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.vo.DrinkingMeasurementVO
 import will.of.d.sulsul.exception.ReportNotFoundException
 
@@ -28,7 +29,7 @@ class DrinkingMeasurementApplicationService(
     fun getMeasurementReportList(userId: Long): DrinkingMeasurementListRes {
         val drinkingMeasurementList: List<DrinkingMeasurement> = drinkingMeasurementService.findAllByUserId(userId)
         return DrinkingMeasurementListRes(
-            drinkingMeasurementList.map { DrinkingMeasurementRes.of(it) }
+            drinkingMeasurementList.map { DrinkingMeasurementSummaryRes.of(it) }
         )
     }
 }
