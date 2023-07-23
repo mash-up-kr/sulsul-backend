@@ -62,4 +62,8 @@ class DrinkingMeasurementService(
 
         return drinkingMeasurementRepository.save(document)
     }
+
+    fun findAllByUserId(userId: Long): List<DrinkingMeasurement> {
+        return drinkingMeasurementRepository.findAllByUserId(userId)
+    }
 }
