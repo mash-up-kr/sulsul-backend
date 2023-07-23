@@ -14,7 +14,7 @@ class DrinkingMeasurementApplicationService(
 ) {
     fun measurement(userId: Long, drinkingMeasurementReq: DrinkingMeasurementReq): DrinkingMeasurementRes {
         val (drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses) = drinkingMeasurementReq
-        val drinkingMeasurementVO = DrinkingMeasurementVO.from(111L, drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses)
+        val drinkingMeasurementVO = DrinkingMeasurementVO.from(userId, drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses)
 
         val res = drinkingMeasurementService.measurement(drinkingMeasurementVO)
 
