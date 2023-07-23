@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
+import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementListRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.service.DrinkingMeasurementApplicationService
 import will.of.d.sulsul.user.User
@@ -43,7 +44,7 @@ class DrinkingMeasurementController(
     @Operation(summary = "주량 측정 결과 조회 API")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "주량 등록 성공", content = [Content(schema = Schema(implementation = DrinkingMeasurementRes::class))]),
+            ApiResponse(responseCode = "200", description = "주량 측정 결과 조회 성공", content = [Content(schema = Schema(implementation = DrinkingMeasurementRes::class))]),
             ApiResponse(responseCode = "404", description = "레포트가 존재하지 않음", content = [Content(schema = Schema(implementation = String::class))]),
             ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
             ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
@@ -52,6 +53,21 @@ class DrinkingMeasurementController(
     @GetMapping("/{reportId}")
     fun getReport(@PathVariable reportId: String): ResponseEntity<DrinkingMeasurementRes> {
         val res = drinkingMeasurementApplicationService.getMeasurementReport(reportId)
+        return ResponseEntity.ok(res)
+    }
+
+    @Operation(summary = "주량 측정 결과 리스트 조회 API")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "주량 측정 결과 조회 성공", content = [Content(schema = Schema(implementation = DrinkingMeasurementListRes::class))]),
+            ApiResponse(responseCode = "404", description = "레포트가 존재하지 않음", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
+            ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
+        ]
+    )
+    @GetMapping("")
+    fun getReportList(@Parameter(hidden = true) user: User): ResponseEntity<DrinkingMeasurementListRes> {
+        val res = drinkingMeasurementApplicationService.getMeasurementReportList(user.kakaoUserId)
         return ResponseEntity.ok(res)
     }
 }

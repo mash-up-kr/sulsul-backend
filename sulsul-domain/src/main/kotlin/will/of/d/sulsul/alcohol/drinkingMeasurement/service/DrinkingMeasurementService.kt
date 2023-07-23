@@ -34,23 +34,23 @@ class DrinkingMeasurementService(
 
         drinks.forEach() {
             when (it.drinkType) {
-                Drink.SOJU.name -> {
+                Drink.SOJU.drinkType -> {
                     averageAlcoholContent += Drink.SOJU.alcoholContent
                     totalCalorie += it.glasses * Drink.SOJU.calorie
                 }
-                Drink.BEER.name -> {
+                Drink.BEER.drinkType -> {
                     averageAlcoholContent += Drink.BEER.alcoholContent
                     totalCalorie += it.glasses * Drink.BEER.calorie
                 }
-                Drink.WINE.name -> {
+                Drink.WINE.drinkType -> {
                     averageAlcoholContent += Drink.WINE.alcoholContent
                     totalCalorie += it.glasses * Drink.WINE.calorie
                 }
-                Drink.WHISKY.name -> {
+                Drink.WHISKY.drinkType -> {
                     averageAlcoholContent += Drink.WHISKY.alcoholContent
                     totalCalorie += it.glasses * Drink.WHISKY.calorie
                 }
-                Drink.KAOLIANG.name -> {
+                Drink.KAOLIANG.drinkType -> {
                     averageAlcoholContent += Drink.KAOLIANG.alcoholContent
                     totalCalorie += it.glasses * Drink.KAOLIANG.calorie
                 }
@@ -61,5 +61,9 @@ class DrinkingMeasurementService(
         val document = DrinkingMeasurement.from(userId, drinkingDuration, totalCalorie, averageAlcoholContent, totalDrinkGlasses, drinks.map { Drinks.from(it.drinkType, it.glasses) }, drinkingStartTime)
 
         return drinkingMeasurementRepository.save(document)
+    }
+
+    fun findAllByUserId(userId: Long): List<DrinkingMeasurement> {
+        return drinkingMeasurementRepository.findAllByUserId(userId)
     }
 }
