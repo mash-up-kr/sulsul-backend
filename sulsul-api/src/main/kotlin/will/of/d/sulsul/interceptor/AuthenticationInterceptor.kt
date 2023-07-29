@@ -5,14 +5,11 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
-import will.of.d.sulsul.auth.KakaoAuthService
-import will.of.d.sulsul.holder.UserContextHolder
-import will.of.d.sulsul.user.UserService
+import will.of.d.sulsul.user.UserApplicationService
 
 @Component
 class AuthenticationInterceptor(
-    private val kakaoAuthService: KakaoAuthService,
-    private val userService: UserService
+    private val userApplicationService: UserApplicationService
 ) : HandlerInterceptor {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
@@ -22,15 +19,12 @@ class AuthenticationInterceptor(
             return false
         }
 
-        return try {
-            val tokenInfo = kakaoAuthService.getTokenInfo(accessToken)
-            val user = userService.getUser(tokenInfo.id) ?: userService.signup(tokenInfo.id)
-            UserContextHolder.set(user)
-            true
-        } catch (e: Exception) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), e.message)
-            false
-        }
+        return userApplicationService.getUserOrCreate(accessToken)
+            ?.let { true }
+            ?: run {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorize")
+                false
+            }
     }
 
     private fun HttpServletRequest.getAccessToken(): String? {

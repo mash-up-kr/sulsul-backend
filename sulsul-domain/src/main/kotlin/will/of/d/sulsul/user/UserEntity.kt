@@ -8,5 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class UserEntity(
     @Id
     val id: ObjectId? = null,
-    val kakaoUserId: Long
-)
+    val kakaoUserId: Long,
+    val kakaoNickname: String
+) {
+    companion object {
+        fun from(user: User) = UserEntity(
+            kakaoUserId = user.kakaoUserId,
+            kakaoNickname = user.kakaoNickname
+        )
+    }
+}
