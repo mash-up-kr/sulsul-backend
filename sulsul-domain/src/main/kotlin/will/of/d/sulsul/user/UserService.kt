@@ -14,13 +14,13 @@ class UserService(
         return userRepository.findByKakaoUserId(kakaoUserId)?.let { User.from(it) }
     }
 
-    fun signup(kakaoUserId: Long): User {
+    fun signup(user: User): User {
         // TODO: 회원가입 시 Discord bot 알림
-        return userRepository.save(UserEntity(kakaoUserId = kakaoUserId))
+        return userRepository.save(UserEntity.from(user))
             .let {
                 User.from(it)
             }.also {
-                log.info("signup $kakaoUserId")
+                log.info("signup ${user.kakaoUserId}")
             }
     }
 }

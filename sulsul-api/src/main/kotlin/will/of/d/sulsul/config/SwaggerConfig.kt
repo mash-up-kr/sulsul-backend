@@ -23,7 +23,7 @@ import will.of.d.sulsul.constant.ROOT_PACKAGE
     )
 )
 class SwaggerConfig(
-    @Value("\${swagger.host.url}")
+    @Value("\${swagger.host.url:http://localhost:8080}")
     val serverHostUrl: String
 ) {
 

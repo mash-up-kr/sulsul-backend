@@ -11,6 +11,8 @@ class KakaoAuthServiceTest(
     private val kakaoAuthService: KakaoAuthService
 ) : SharedContext() {
 
+    private val accessToken = "KfbggMN0tlYGB9vuzCkeuhtlGp75Fj2cAWQOwEi4Cj1ylwAAAYmgNS0U"
+
     @Test
     fun `invliad token으로 요청하면 Unauthorized 예외가 발생한다`() {
         assertThrows<Unauthorized> {
@@ -22,7 +24,14 @@ class KakaoAuthServiceTest(
     @Test
     fun `valid token`() {
         assertDoesNotThrow {
-            kakaoAuthService.getTokenInfo("Bearer WhQA7pRrbjhxhAgJDpSiPauEneaZzTLbph1faAtMCj11nAAAAYijDDwR")
+            kakaoAuthService.getTokenInfo("$accessToken asdasd")
         }
+    }
+
+    @Disabled("구현 확인용 테스트. tken expired 시 동작하지 않으므로 비활성화")
+    @Test
+    fun testGetUserProfile() {
+        val body = kakaoAuthService.getUserProfile(accessToken)
+        print(body)
     }
 }

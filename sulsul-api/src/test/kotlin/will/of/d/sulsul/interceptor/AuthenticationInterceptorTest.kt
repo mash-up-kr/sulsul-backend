@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
-import will.of.d.sulsul.auth.KakaoAuthService
-import will.of.d.sulsul.user.UserService
+import will.of.d.sulsul.user.UserApplicationService
 import java.util.Base64
 
 class AuthenticationInterceptorTest {
@@ -15,9 +14,8 @@ class AuthenticationInterceptorTest {
     @Test
     fun `Header에 Authorization 이 없을 경우 401`() {
         // given
-        val kakaoAuthService = mock(KakaoAuthService::class.java)
-        val userService = mock(UserService::class.java)
-        val interceptor = AuthenticationInterceptor(kakaoAuthService, userService)
+        val userApplicationService = mock(UserApplicationService::class.java)
+        val interceptor = AuthenticationInterceptor(userApplicationService)
 
         val request = MockHttpServletRequest()
         val response = MockHttpServletResponse()
@@ -34,9 +32,8 @@ class AuthenticationInterceptorTest {
     @Test
     fun `Token이 Bearer 타입이 아닌 경우 401`() {
         // given
-        val kakaoAuthService = mock(KakaoAuthService::class.java)
-        val userService = mock(UserService::class.java)
-        val interceptor = AuthenticationInterceptor(kakaoAuthService, userService)
+        val userApplicationService = mock(UserApplicationService::class.java)
+        val interceptor = AuthenticationInterceptor(userApplicationService)
 
         val request = MockHttpServletRequest().apply {
             val credential = Base64.getEncoder().encode("mashup:seongchan".toByteArray())
