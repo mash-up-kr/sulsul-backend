@@ -18,7 +18,7 @@ data class DrinkingLimitEntity(
     val kakaoUserId: Long,
     val drinkType: String,
     val glass: Int,
-    val alcoholAmount: Double,
+    val alcoholAmount: Int,
 
     @CreatedDate
     val createdAt: LocalDateTime = LocalDateTime.now(),

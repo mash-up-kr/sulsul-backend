@@ -24,7 +24,7 @@ class TitleController(
                     badgeImageUrl = it.badgeImageUrl,
                     cardImageUrl = it.cardImageUrl,
                     minAlcoholAmount = it.minAlcoholAmount,
-                    maxAlcoholAmount = it.maxAlcoholAmound
+                    maxAlcoholAmount = it.maxAlcoholAmount
                 )
             }
         )
@@ -39,7 +39,7 @@ class TitleController(
         val subTitleText: String,
         val badgeImageUrl: String,
         val cardImageUrl: String,
-        val minAlcoholAmount: Double,
-        val maxAlcoholAmount: Double
+        val minAlcoholAmount: Int,
+        val maxAlcoholAmount: Int
     )
 }
