@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
+import will.of.d.sulsul.holder.UserContextHolder
 import will.of.d.sulsul.user.UserApplicationService
 
 @Component
@@ -20,7 +21,10 @@ class AuthenticationInterceptor(
         }
 
         return userApplicationService.getUserOrCreate(accessToken)
-            ?.let { true }
+            ?.let {
+                UserContextHolder.set(it)
+                true
+            }
             ?: run {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorize")
                 false
