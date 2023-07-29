@@ -29,8 +29,8 @@ class MockDrinkingLimitController {
         val drinkType: String,
         @Schema(description = "몇 잔 마셨는지를 나타내는 필드")
         val glass: Int,
-        @Schema(description = "유저의 주량을 알코올 양으로 표현하는 필드 (단위 g)")
-        val totalAlcoholAmount: Double
+        @Schema(description = "유저의 주량을 알코올 양으로 표현하는 필드 (단위 mg)")
+        val totalAlcoholAmount: Int
     )
 
     data class DrinkingLimitListDto(

@@ -17,9 +17,9 @@ class DrinkingMeasurementApplicationService(
         val (drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses) = drinkingMeasurementReq
         val drinkingMeasurementVO = DrinkingMeasurementVO.from(userId, drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses)
 
-        val res = drinkingMeasurementService.measurement(drinkingMeasurementVO)
+        val document = drinkingMeasurementService.measurement(drinkingMeasurementVO)
 
-        return DrinkingMeasurementRes.of(res)
+        return DrinkingMeasurementRes.of(document)
     }
 
     fun getMeasurementReport(reportId: String): DrinkingMeasurementRes {

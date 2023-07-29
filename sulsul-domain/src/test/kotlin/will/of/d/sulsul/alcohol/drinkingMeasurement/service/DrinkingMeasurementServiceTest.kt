@@ -25,6 +25,7 @@ class DrinkingMeasurementServiceTest(
                     userId = 130L,
                     drinkingDuration = "3시간 20분",
                     alcoholCalorie = 100,
+                    alcoholAmount = 1600,
                     averageAlcoholContent = 20.0,
                     drinks = drinks,
                     totalDrinkGlasses = 15,

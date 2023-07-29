@@ -27,4 +27,9 @@ class DrinkingLimitService(
     fun getInShare(@Valid drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
         return DrinkingLimitEntity.from(drinkingLimitVO = drinkingLimitVO)
     }
+
+    fun getAlcoholAmount(kakaoUserId: Long): Int {
+        val document = drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId)
+        return document!!.alcoholAmount
+    }
 }

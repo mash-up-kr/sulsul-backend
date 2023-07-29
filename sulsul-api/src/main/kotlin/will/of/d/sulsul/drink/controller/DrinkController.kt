@@ -43,8 +43,8 @@ class DrinkController(
         val alcoholPercentage: Double,
         @Schema(description = "술병 용액 양. 단위는 ml")
         val bottleCapacity: Int,
-        @Schema(description = "술잔에 포함된 알코올 양. 단위는 g")
-        val alcoholAmountPerGlass: Double,
+        @Schema(description = "술잔에 포함된 알코올 양. 단위는 mg")
+        val alcoholAmountPerGlass: Int,
         @Schema(description = "술잔 용약 양. 단위는 ml")
         val glassCapacity: Int
     )
