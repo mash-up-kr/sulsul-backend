@@ -20,6 +20,7 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasure
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementListRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.service.DrinkingMeasurementApplicationService
+import will.of.d.sulsul.alcohol.drinkingMeasurement.vo.DrinkingMeasurementVO
 import will.of.d.sulsul.title.domain.Title
 import will.of.d.sulsul.user.User
 
@@ -39,8 +40,17 @@ class DrinkingMeasurementController(
         ]
     )
     @PostMapping("")
-    fun save(@Parameter(hidden = true) user: User, @RequestBody drinkingMeasurementReq: DrinkingMeasurementReq): ResponseEntity<DrinkingMeasurementRes> {
-        val res = drinkingMeasurementApplicationService.measurement(user.kakaoUserId, drinkingMeasurementReq)
+    fun save(@Parameter(hidden = true) user: User, @RequestBody req: DrinkingMeasurementReq): ResponseEntity<DrinkingMeasurementRes> {
+        val res = drinkingMeasurementApplicationService.measurement(
+            DrinkingMeasurementVO.from(
+                userId = user.kakaoUserId,
+                drinks = req.drinks,
+                drinkingStartTime = req.drinkingStartTime,
+                drinkingEndTime = req.drinkingEndTime,
+                totalDrinkGlasses = req.totalDrinkGlasses
+            )
+        )
+
         return ResponseEntity.ok(res)
     }
 
