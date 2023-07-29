@@ -9,12 +9,15 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.Drinks
 import will.of.d.sulsul.alcohol.drinkingMeasurement.repository.DrinkingMeasurementRepository
 import will.of.d.sulsul.alcohol.drinkingMeasurement.vo.DrinkingMeasurementVO
 import will.of.d.sulsul.drink.domain.Drink
+import will.of.d.sulsul.drink.service.AlcoholService
 import java.time.Duration
+import java.time.LocalDateTime
 
 @Service
 class DrinkingMeasurementService(
     private val drinkingMeasurementRepository: DrinkingMeasurementRepository,
-    private val drinkingLimitService: DrinkingLimitService
+    private val drinkingLimitService: DrinkingLimitService,
+    private val alcoholService: AlcoholService
 ) {
     fun save(drinkingMeasurement: DrinkingMeasurement): DrinkingMeasurement {
         return drinkingMeasurementRepository.save(drinkingMeasurement)
@@ -26,64 +29,39 @@ class DrinkingMeasurementService(
 
     fun measurement(drinkingMeasurementVO: DrinkingMeasurementVO): DrinkingMeasurement {
         val (userId, drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses) = drinkingMeasurementVO
-        val duration = Duration.between(drinkingStartTime, drinkingEndTime)
-        val hours = duration.toHours()
-        val minutes = duration.toMinutes() % 60
-        val drinkingDuration = "${hours}시간 ${minutes}분"
-        var averageAlcoholPercent = 0.0
-        var totalCalorie = 0
-        var totalAlcoholAmount = 0
 
-        drinks.forEach() {
-            when (it.drinkType) {
-                Drink.SOJU.type -> {
-                    averageAlcoholPercent += (Drink.SOJU.alcoholPercentage * it.glasses)
-                    totalCalorie += it.glasses * Drink.SOJU.caloriePerGlass
-                    totalAlcoholAmount += it.glasses * Drink.SOJU.alcoholAmountPerGlass
-                }
-                Drink.BEER.type -> {
-                    averageAlcoholPercent += (Drink.BEER.alcoholPercentage * it.glasses)
-                    totalCalorie += it.glasses * Drink.BEER.caloriePerGlass
-                    totalAlcoholAmount += it.glasses * Drink.BEER.alcoholAmountPerGlass
-                }
-                Drink.WINE.type -> {
-                    averageAlcoholPercent += (Drink.WINE.alcoholPercentage * it.glasses)
-                    totalCalorie += it.glasses * Drink.WINE.caloriePerGlass
-                    totalAlcoholAmount += it.glasses * Drink.WINE.alcoholAmountPerGlass
-                }
-                Drink.WHISKY.type -> {
-                    averageAlcoholPercent += (Drink.WHISKY.alcoholPercentage * it.glasses)
-                    totalCalorie += it.glasses * Drink.WHISKY.caloriePerGlass
-                    totalAlcoholAmount += it.glasses * Drink.WHISKY.alcoholAmountPerGlass
-                }
-                Drink.KAOLIANG.type -> {
-                    averageAlcoholPercent += (Drink.KAOLIANG.alcoholPercentage * it.glasses)
-                    totalCalorie += it.glasses * Drink.KAOLIANG.caloriePerGlass
-                    totalAlcoholAmount += it.glasses * Drink.KAOLIANG.alcoholAmountPerGlass
-                }
-            }
-        }
+        val drinkingDuration = calculateDurationTime(drinkingStartTime, drinkingEndTime)
 
-        averageAlcoholPercent /= totalDrinkGlasses
-
+        val drinkingMeasurementInfo = alcoholService.calculateDrinkingMeasurementInfo(drinks)
         val extraGlasses = calculateExtraGlasses(
             myAlcoholAmount = drinkingLimitService.getAlcoholAmount(kakaoUserId = userId),
-            todayAlcoholAmout = totalAlcoholAmount
+            todayAlcoholAmout = drinkingMeasurementInfo.totalAlcoholAmount
         )
+
+        val drinkCardImageUrl = alcoholService.defineDrinkCardImageUrl(drinks)
 
         val document = DrinkingMeasurement.from(
             userId = userId,
             drinkingDuration = drinkingDuration,
-            alcoholCalorie = totalCalorie,
-            alcoholAmount = totalAlcoholAmount,
+            alcoholCalorie = drinkingMeasurementInfo.totalCalorie,
+            alcoholAmount = drinkingMeasurementInfo.totalAlcoholAmount,
             extraGlasses = extraGlasses,
-            averageAlcoholContent = averageAlcoholPercent,
+            drinkCardImageUrl = drinkCardImageUrl,
+            averageAlcoholContent = drinkingMeasurementInfo.averageAlcoholPercent,
             totalDrinkGlasses = totalDrinkGlasses,
             drinks = drinks.map { Drinks.from(it.drinkType, it.glasses) },
             drankAt = drinkingStartTime
         )
 
         return drinkingMeasurementRepository.save(document)
+    }
+
+    private fun calculateDurationTime(drinkingStartTime: LocalDateTime, drinkingEndTime: LocalDateTime): String {
+        val duration = Duration.between(drinkingStartTime, drinkingEndTime)
+        val hours = duration.toHours()
+        val minutes = duration.toMinutes() % 60
+
+        return "${hours}시간 ${minutes}분"
     }
 
     fun findAllByUserId(userId: Long): List<DrinkingMeasurement> {
@@ -98,3 +76,9 @@ class DrinkingMeasurementService(
         return diffAlcoholAmount / Drink.SOJU.alcoholAmountPerGlass
     }
 }
+
+data class DrinkingMeasurementInfo(
+    val averageAlcoholPercent: Double,
+    val totalCalorie: Int,
+    val totalAlcoholAmount: Int
+)

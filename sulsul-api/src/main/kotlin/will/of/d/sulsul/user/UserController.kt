@@ -3,11 +3,11 @@ package will.of.d.sulsul.user
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-import will.of.d.sulsul.drink.controller.AlcoholApplicationService
+import will.of.d.sulsul.drink.service.AlcoholService
 
 @RestController
 class UserController(
-    private val drinkService: AlcoholApplicationService
+    private val drinkService: AlcoholService
 ) {
 
     @GetMapping("/api/v1/user/me")

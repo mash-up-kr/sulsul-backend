@@ -29,7 +29,8 @@ class DrinkingMeasurementApplicationService(
     }
 
     fun getMeasurementReport(reportId: String): DrinkingMeasurementRes {
-        return drinkingMeasurementService.findById(reportId)?.let { DrinkingMeasurementRes.of(it) } ?: throw ReportNotFoundException("Report not found with id: $reportId")
+        return drinkingMeasurementService.findById(reportId)?.let { DrinkingMeasurementRes.of(it) }
+            ?: throw ReportNotFoundException("Report not found with id: $reportId")
     }
 
     fun getMeasurementReportList(userId: Long): DrinkingMeasurementListRes {
