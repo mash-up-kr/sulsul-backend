@@ -8,7 +8,7 @@ import will.of.d.sulsul.drink.domain.Drink
 
 @Schema(description = "주량등록 시, 보내야하는 Request Body")
 data class PostDrinkingLimitReq(
-    @Schema(description = "주종 이름")
+    @Schema(description = "술의 종류", allowableValues = ["소주", "와인", "맥주", "위스키", "고량주"])
     val drinkType: String,
 
     @Schema(description = "해당 주종을 몇 잔 마실 수 있는지 나타내는 필드")

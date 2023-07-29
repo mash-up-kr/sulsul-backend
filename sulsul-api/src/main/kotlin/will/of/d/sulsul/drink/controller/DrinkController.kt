@@ -37,7 +37,7 @@ class DrinkController(
 
     @Schema(description = "술에 대한 정보")
     data class DrinkDto(
-        @Schema(description = "술의 종류. 소주, 와인, 고량주, 위스키, 맥주")
+        @Schema(description = "술의 종류", allowableValues = ["소주", "와인", "맥주", "위스키", "고량주"])
         val drinkType: String,
         @Schema(description = "술 도수. 단위는 %")
         val alcoholPercentage: Double,
