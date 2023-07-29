@@ -20,8 +20,8 @@ import will.of.d.sulsul.alcohol.drinkingLimit.service.DrinkingLimitApplicationSe
 import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 import will.of.d.sulsul.common.findBy
 import will.of.d.sulsul.drink.domain.Drink
-import will.of.d.sulsul.title.controller.dto.TitleDto
 import will.of.d.sulsul.title.domain.Title
+import will.of.d.sulsul.title.dto.TitleDto
 import will.of.d.sulsul.user.User
 
 @Tag(name = "주량등록 컨트롤러")
