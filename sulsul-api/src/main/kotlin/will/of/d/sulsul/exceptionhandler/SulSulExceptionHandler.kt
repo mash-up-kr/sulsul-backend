@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolationException
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import will.of.d.sulsul.exception.ReportNotFoundException
@@ -17,8 +18,8 @@ class SulSulExceptionHandler {
 
     companion object : Logger
 
-    @ExceptionHandler(SulsulValidException::class)
-    fun badRequestException(e: SulsulValidException): ResponseEntity<Any> {
+    @ExceptionHandler(SulsulValidException::class, MissingServletRequestParameterException::class)
+    fun badRequestException(e: Exception): ResponseEntity<Any> {
         return ResponseEntity.badRequest().body(e.message)
     }
 
