@@ -13,6 +13,9 @@ data class DrinkingLimitRes(
     @Schema(description = "내 칭호 타이틀")
     val title: String,
 
+    @Schema(description = "칭호 이미지 URL")
+    val titleImageUrl: String,
+
     @Schema(description = "다른 주종에 대한 주량정보")
     val otherDrinks: List<DrinkRes>,
 
@@ -28,6 +31,7 @@ data class DrinkingLimitRes(
             return DrinkingLimitRes(
                 drink = DrinkRes(drinkingLimit.drinkType, drinkingLimit.glass),
                 title = ownerTitle.text,
+                titleImageUrl = ownerTitle.cardImageUrl,
                 otherDrinks = otherDrinks,
                 totalAlcoholAmount = drinkingLimit.alcoholAmount
             )
