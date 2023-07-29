@@ -12,7 +12,7 @@ import will.of.d.sulsul.drink.domain.Drink
 import java.time.LocalDateTime
 
 @Document(collection = "drinking_limit")
-data class DrinkingLimit(
+data class DrinkingLimitEntity(
     @Id
     val id: ObjectId? = null,
     val kakaoUserId: Long,
@@ -26,10 +26,10 @@ data class DrinkingLimit(
     val updatedDate: LocalDateTime = LocalDateTime.now()
 ) {
     companion object {
-        fun from(drinkingLimitVO: DrinkingLimitVO): DrinkingLimit {
+        fun from(drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
             val drink: Drink? = Drink::type findBy drinkingLimitVO.drinkType
 
-            return DrinkingLimit(
+            return DrinkingLimitEntity(
                 kakaoUserId = drinkingLimitVO.kakaoUserId,
                 drinkType = drinkingLimitVO.drinkType,
                 glass = drinkingLimitVO.glass,
