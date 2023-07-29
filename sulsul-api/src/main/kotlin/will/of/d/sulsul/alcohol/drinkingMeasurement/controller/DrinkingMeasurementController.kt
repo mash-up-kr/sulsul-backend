@@ -77,7 +77,7 @@ class DrinkingMeasurementController(
     @Operation(summary = "주량측정 시, 클릭할 때마다 호출하는 API")
     @ApiResponses(
         value = [
-            ApiResponse(responseCode = "200", description = "현재 섭취한 주량에 대한 타이틀 조회 성공"),
+            ApiResponse(responseCode = "200", description = "현재 섭취한 주량에 대한 타이틀 조회 성공", content = [Content(schema = Schema(implementation = DrinkingMeasurementByClickRes::class))]),
             ApiResponse(responseCode = "401", description = "토큰 정보 없거나 만료됨", content = [Content(schema = Schema(implementation = String::class))]),
             ApiResponse(responseCode = "500", description = "서버 에러", content = [Content(schema = Schema(implementation = String::class))])
         ]
