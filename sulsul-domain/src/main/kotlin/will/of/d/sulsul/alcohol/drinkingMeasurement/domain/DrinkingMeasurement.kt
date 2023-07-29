@@ -26,6 +26,8 @@ data class DrinkingMeasurement(
     val userId: Long,
     val drinkingDuration: String,
     val alcoholCalorie: Int,
+    val alcoholAmount: Int,
+    val extraGlasses: Int,
     val averageAlcoholContent: Double,
     val drinks: List<Drinks>,
     val totalDrinkGlasses: Int,
@@ -36,6 +38,8 @@ data class DrinkingMeasurement(
             userId: Long,
             drinkingDuration: String,
             alcoholCalorie: Int,
+            alcoholAmount: Int,
+            extraGlasses: Int,
             averageAlcoholContent: Double,
             totalDrinkGlasses: Int,
             drinks: List<Drinks>,
@@ -45,9 +49,11 @@ data class DrinkingMeasurement(
                 userId = userId,
                 drinkingDuration = drinkingDuration,
                 alcoholCalorie = alcoholCalorie,
+                extraGlasses = extraGlasses,
                 averageAlcoholContent = averageAlcoholContent,
                 totalDrinkGlasses = totalDrinkGlasses,
                 drinks = drinks,
+                alcoholAmount = alcoholAmount,
                 drankAt = drankAt
             )
         }
