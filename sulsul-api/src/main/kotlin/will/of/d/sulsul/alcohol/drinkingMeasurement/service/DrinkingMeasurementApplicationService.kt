@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service
 import will.of.d.sulsul.alcohol.drinkingLimit.service.DrinkingLimitService
 import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.DrinkingMeasurement
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkListReq
-import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.request.DrinkingMeasurementReq
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementListRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementRes
 import will.of.d.sulsul.alcohol.drinkingMeasurement.dto.response.DrinkingMeasurementSummaryRes
@@ -19,10 +18,7 @@ class DrinkingMeasurementApplicationService(
     private val drinkingMeasurementService: DrinkingMeasurementService,
     private val drinkingLimitService: DrinkingLimitService
 ) {
-    fun measurement(userId: Long, drinkingMeasurementReq: DrinkingMeasurementReq): DrinkingMeasurementRes {
-        val (drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses) = drinkingMeasurementReq
-        val drinkingMeasurementVO = DrinkingMeasurementVO.from(userId, drinks, drinkingStartTime, drinkingEndTime, totalDrinkGlasses)
-
+    fun measurement(drinkingMeasurementVO: DrinkingMeasurementVO): DrinkingMeasurementRes {
         val document = drinkingMeasurementService.measurement(drinkingMeasurementVO)
 
         return DrinkingMeasurementRes.of(document)
