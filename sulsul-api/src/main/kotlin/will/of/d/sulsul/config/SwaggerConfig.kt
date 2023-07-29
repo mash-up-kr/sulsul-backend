@@ -52,6 +52,7 @@ class SwaggerConfig(
     fun server(): GroupedOpenApi {
         return GroupedOpenApi.builder()
             .group("sulsul-api")
+            .pathsToExclude("/health")
             .packagesToScan(ROOT_PACKAGE)
             .build()
     }

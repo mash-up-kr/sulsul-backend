@@ -1,12 +1,14 @@
 package will.of.d.sulsul.user
 
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.DrinkingLimitDto
 import will.of.d.sulsul.drink.service.AlcoholService
 import will.of.d.sulsul.title.dto.TitleDto
 
+@Tag(name = "유저 컨트롤러")
 @RestController
 class UserController(
     private val drinkService: AlcoholService
