@@ -17,7 +17,7 @@ class UserController(
             drinkingLimits = user.drinkingLimit?.let {
                 drinkService.calculateGlassBy(it).map { DrinkLimit(type = it.drinkType, glass = it.glass) }
             },
-            title = user.title?.let { TitleRes(it.text, it.subText) }
+            title = user.title?.let { TitleRes(it.text, it.subText, it.cardImageUrl, it.badgeImageUrl) }
         )
     }
 }
@@ -35,5 +35,7 @@ data class DrinkLimit(
 
 data class TitleRes(
     val title: String,
-    val subTitle: String
+    val subTitle: String,
+    val cardImageUrl: String,
+    val badgeImageUrl: String
 )
