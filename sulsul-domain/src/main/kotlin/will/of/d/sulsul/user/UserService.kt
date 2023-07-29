@@ -26,4 +26,19 @@ class UserService(
                 discordService.send("hello")
             }
     }
+
+    fun upsert(user: User): User {
+        return userRepository.findByKakaoUserId(user.kakaoUserId)
+            ?.let { entity ->
+                userRepository.save(
+                    entity.copy(
+                        kakaoUserId = user.kakaoUserId,
+                        kakaoNickname = user.kakaoNickname,
+                        drinkingLimit = user.drinkingLimit,
+                        title = user.title?.text
+                    )
+                )
+            }?.toVO()
+            ?: userRepository.save(UserEntity.from(user)).toVO()
+    }
 }

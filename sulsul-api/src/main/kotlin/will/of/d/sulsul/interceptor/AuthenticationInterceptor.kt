@@ -13,21 +13,27 @@ class AuthenticationInterceptor(
     private val userApplicationService: UserApplicationService
 ) : HandlerInterceptor {
 
+    private val excludePaths = listOf("/api/v1/drinkingLimit")
+
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val accessToken = request.getAccessToken()
-        if (accessToken == null) {
+        if (accessToken == null && !request.isExcludePath()) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "token is not exists or not bearer type")
             return false
         }
 
-        return userApplicationService.getUserOrCreate(accessToken)
+        return userApplicationService.getUserOrCreate(accessToken ?: "unvalid token")
             ?.let {
                 UserContextHolder.set(it)
                 true
             }
             ?: run {
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorize")
-                false
+                if (request.isExcludePath()) {
+                    true
+                } else {
+                    response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized")
+                    false
+                }
             }
     }
 
@@ -39,5 +45,9 @@ class AuthenticationInterceptor(
                 null
             }
         }
+    }
+
+    private fun HttpServletRequest.isExcludePath(): Boolean {
+        return excludePaths.any { it == this.requestURI }
     }
 }

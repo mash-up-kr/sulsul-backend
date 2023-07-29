@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 class WebClientConfig(
-    @Value("\${discord.base-url}") private val discordBaseUrl: String
+    @Value("\${discord.base-url:http://www.naver.com}") private val discordBaseUrl: String
 ) {
     @Bean
     fun kakaoAuthWebClient(): WebClient {

@@ -1,6 +1,5 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.service
 
-import jakarta.validation.Valid
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.validation.annotation.Validated
@@ -13,19 +12,14 @@ import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 class DrinkingLimitService(
     private val drinkingLimitRepository: DrinkingLimitRepository
 ) {
-    fun save(@Valid drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
-        val document = DrinkingLimitEntity.from(drinkingLimitVO = drinkingLimitVO)
-        val savedDocument = drinkingLimitRepository.save(document)
-
-        return savedDocument
+    fun save(kakaoUserId: Long, drinkingLimitVO: DrinkingLimitVO): DrinkingLimitVO {
+        val document = DrinkingLimitEntity.from(kakaoUserId = kakaoUserId, drinkingLimitVO = drinkingLimitVO)
+        return drinkingLimitRepository.save(document).toVO()
     }
 
-    fun findByUserId(kakaoUserId: Long): DrinkingLimitEntity {
-        return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId) ?: throw NotFoundException()
-    }
-
-    fun getInShare(@Valid drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
-        return DrinkingLimitEntity.from(drinkingLimitVO = drinkingLimitVO)
+    fun findByUserId(kakaoUserId: Long): DrinkingLimitVO {
+        return drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId)?.toVO()
+            ?: throw NotFoundException()
     }
 
     fun getAlcoholAmount(kakaoUserId: Long): Int {
