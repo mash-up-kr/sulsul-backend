@@ -3,11 +3,11 @@ package will.of.d.sulsul.alcohol.drinkingMeasurement.service
 import org.bson.types.ObjectId
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import will.of.d.sulsul.alcohol.Drink
 import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.DrinkingMeasurement
 import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.Drinks
 import will.of.d.sulsul.alcohol.drinkingMeasurement.repository.DrinkingMeasurementRepository
 import will.of.d.sulsul.alcohol.drinkingMeasurement.vo.DrinkingMeasurementVO
+import will.of.d.sulsul.drink.domain.Drink
 import java.time.Duration
 
 @Service
@@ -34,25 +34,25 @@ class DrinkingMeasurementService(
 
         drinks.forEach() {
             when (it.drinkType) {
-                Drink.SOJU.drinkType -> {
-                    averageAlcoholContent += Drink.SOJU.alcoholContent
-                    totalCalorie += it.glasses * Drink.SOJU.calorie
+                Drink.SOJU.type -> {
+                    averageAlcoholContent += Drink.SOJU.alcoholPercentage
+                    totalCalorie += it.glasses * Drink.SOJU.caloriePerGlass
                 }
-                Drink.BEER.drinkType -> {
-                    averageAlcoholContent += Drink.BEER.alcoholContent
-                    totalCalorie += it.glasses * Drink.BEER.calorie
+                Drink.BEER.type -> {
+                    averageAlcoholContent += Drink.BEER.alcoholPercentage
+                    totalCalorie += it.glasses * Drink.BEER.caloriePerGlass
                 }
-                Drink.WINE.drinkType -> {
-                    averageAlcoholContent += Drink.WINE.alcoholContent
-                    totalCalorie += it.glasses * Drink.WINE.calorie
+                Drink.WINE.type -> {
+                    averageAlcoholContent += Drink.WINE.alcoholPercentage
+                    totalCalorie += it.glasses * Drink.WINE.caloriePerGlass
                 }
-                Drink.WHISKY.drinkType -> {
-                    averageAlcoholContent += Drink.WHISKY.alcoholContent
-                    totalCalorie += it.glasses * Drink.WHISKY.calorie
+                Drink.WHISKY.type -> {
+                    averageAlcoholContent += Drink.WHISKY.alcoholPercentage
+                    totalCalorie += it.glasses * Drink.WHISKY.caloriePerGlass
                 }
-                Drink.KAOLIANG.drinkType -> {
-                    averageAlcoholContent += Drink.KAOLIANG.alcoholContent
-                    totalCalorie += it.glasses * Drink.KAOLIANG.calorie
+                Drink.KAOLIANG.type -> {
+                    averageAlcoholContent += Drink.KAOLIANG.alcoholPercentage
+                    totalCalorie += it.glasses * Drink.KAOLIANG.caloriePerGlass
                 }
             }
         }
