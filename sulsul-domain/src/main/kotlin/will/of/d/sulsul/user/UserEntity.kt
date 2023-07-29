@@ -9,12 +9,16 @@ data class UserEntity(
     @Id
     val id: ObjectId? = null,
     val kakaoUserId: Long,
-    val kakaoNickname: String
+    val kakaoNickname: String,
+    val drinkingLimit: Int? = null,
+    val title: String? = null
 ) {
     companion object {
         fun from(user: User) = UserEntity(
             kakaoUserId = user.kakaoUserId,
-            kakaoNickname = user.kakaoNickname
+            kakaoNickname = user.kakaoNickname,
+            drinkingLimit = user.drinkingLimit,
+            title = user.title?.text
         )
     }
 }

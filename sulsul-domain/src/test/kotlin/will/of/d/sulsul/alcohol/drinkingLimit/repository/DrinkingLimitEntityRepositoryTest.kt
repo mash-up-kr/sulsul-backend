@@ -4,10 +4,10 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import will.of.d.sulsul.SharedContext
-import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
+import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimitEntity
 import will.of.d.sulsul.drink.domain.Drink
 
-class DrinkingLimitRepositoryTest(
+class DrinkingLimitEntityRepositoryTest(
     private val drinkingLimitRepository: DrinkingLimitRepository
 ) : SharedContext() {
 
@@ -16,7 +16,7 @@ class DrinkingLimitRepositoryTest(
     fun drinkLimitSuccessTest() {
         // given
         val randomKakaoUserId = 2015392L
-        val document = DrinkingLimit(id = null, kakaoUserId = randomKakaoUserId, Drink.SOJU.name, glass = 10, alcoholAmount = 0.0)
+        val document = DrinkingLimitEntity(id = null, kakaoUserId = randomKakaoUserId, Drink.SOJU.name, glass = 10, alcoholAmount = 0.0)
 
         // when
         val findDocument = drinkingLimitRepository.save(document)

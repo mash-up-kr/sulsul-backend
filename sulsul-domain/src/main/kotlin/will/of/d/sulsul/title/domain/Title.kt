@@ -18,4 +18,10 @@ enum class Title(
     PLATINUM("알낳괴", "미쳤다", mockImageUrl, mockImageUrl, GOLD.maxAlcoholAmound, Drink.SOJU.alcoholPercentage * 31),
     DIAMOND("음주가무 천상계", "알콜 마스터", mockImageUrl, mockImageUrl, PLATINUM.maxAlcoholAmound, Drink.SOJU.alcoholPercentage * 40),
     MASTER("Alcohol God", "알콜 마스터", mockImageUrl, mockImageUrl, DIAMOND.maxAlcoholAmound, Drink.SOJU.alcoholPercentage * 50_000)
+    ;
+
+    companion object {
+        private val textMap = Title.values().associateBy { it.text }
+        fun from(text: String) = textMap[text]
+    }
 }

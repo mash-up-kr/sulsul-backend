@@ -1,7 +1,7 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.response
 
 import io.swagger.v3.oas.annotations.media.Schema
-import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimit
+import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimitEntity
 import will.of.d.sulsul.drink.domain.Drink
 
 @Schema(description = "주량등록 시 받는 Response 형식")
@@ -17,17 +17,17 @@ data class DrinkingLimitRes(
     val totalAlcoholAmount: Double
 ) {
     companion object {
-        fun of(drinkingLimit: DrinkingLimit): DrinkingLimitRes {
+        fun of(drinkingLimitEntity: DrinkingLimitEntity): DrinkingLimitRes {
 //            val titleEnum: TitleOfDrinkingLimit = drinkingLimit.createTitle()
 //            val drinkEnum: Drink? = Drink::type findBy drinkingLimit.drinkType
-            val ownerDrink = DrinkRes(drinkingLimit.drinkType, drinkingLimit.glass)
-            val otherDrinks = createOtherDrinks(ownerDrink, drinkingLimit.alcoholAmount)
+            val ownerDrink = DrinkRes(drinkingLimitEntity.drinkType, drinkingLimitEntity.glass)
+            val otherDrinks = createOtherDrinks(ownerDrink, drinkingLimitEntity.alcoholAmount)
 
             return DrinkingLimitRes(
 //                titleOfDrinkingLimit = titleEnum,
-                myDrink = DrinkRes(drinkingLimit.drinkType, drinkingLimit.glass),
+                myDrink = DrinkRes(drinkingLimitEntity.drinkType, drinkingLimitEntity.glass),
                 otherDrinks = otherDrinks,
-                totalAlcoholAmount = drinkingLimit.alcoholAmount
+                totalAlcoholAmount = drinkingLimitEntity.alcoholAmount
             )
         }
 

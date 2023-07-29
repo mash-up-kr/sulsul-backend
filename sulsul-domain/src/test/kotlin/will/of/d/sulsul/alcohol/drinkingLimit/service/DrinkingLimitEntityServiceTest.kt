@@ -14,7 +14,7 @@ import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
 import will.of.d.sulsul.drink.domain.Drink
 import java.time.format.DateTimeFormatter
 
-class DrinkingLimitServiceTest(
+class DrinkingLimitEntityServiceTest(
     private val drinkingLimitService: DrinkingLimitService,
     private val drinkingLimitRepository: DrinkingLimitRepository
 ) : SharedContext() {
