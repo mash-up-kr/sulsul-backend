@@ -18,34 +18,11 @@ class DrinkController(
     @Operation(summary = "주종 조회 API", description = "drink amount 단위: ml, alcohol amount 단위: g. 하단에 Schemas DrinkDto 참고")
     @GetMapping("/drink")
     fun drink(): GetDrinkRes {
-        return GetDrinkRes(
-            drinkService.getDrinks().map {
-                DrinkDto(
-                    drinkType = it.type,
-                    alcoholPercentage = it.alcoholPercentage,
-                    bottleCapacity = it.bottleCapacity,
-                    alcoholAmountPerGlass = it.alcoholAmountPerGlass,
-                    glassCapacity = it.glassCapacity
-                )
-            }
-        )
+        return GetDrinkRes(drinkService.getDrinks().map { it.type })
     }
 
     data class GetDrinkRes(
-        val drinks: List<DrinkDto>
-    )
-
-    @Schema(description = "술에 대한 정보")
-    data class DrinkDto(
-        @Schema(description = "술의 종류", allowableValues = ["소주", "와인", "맥주", "위스키", "고량주"])
-        val drinkType: String,
-        @Schema(description = "술 도수. 단위는 %")
-        val alcoholPercentage: Double,
-        @Schema(description = "술병 용액 양. 단위는 ml")
-        val bottleCapacity: Int,
-        @Schema(description = "술잔에 포함된 알코올 양. 단위는 mg")
-        val alcoholAmountPerGlass: Int,
-        @Schema(description = "술잔 용약 양. 단위는 ml")
-        val glassCapacity: Int
+        @Schema(description = "술의 종류", example = "[\"소주\", \"와인\", \"맥주\", \"위스키\", \"고량주\"]")
+        val drinks: List<String>
     )
 }

@@ -1,7 +1,7 @@
 package will.of.d.sulsul.alcohol.drinkingLimit.dto.response
 
 import will.of.d.sulsul.alcohol.drinkingLimit.dto.DrinkingLimitDto
-import will.of.d.sulsul.title.controller.dto.TitleDto
+import will.of.d.sulsul.title.dto.TitleDto
 
 data class PostDrinkingLimitResDto(
     val drinks: List<DrinkingLimitDto>,

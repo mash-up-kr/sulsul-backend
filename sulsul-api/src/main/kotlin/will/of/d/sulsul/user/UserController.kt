@@ -3,7 +3,9 @@ package will.of.d.sulsul.user
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import will.of.d.sulsul.alcohol.drinkingLimit.dto.DrinkingLimitDto
 import will.of.d.sulsul.drink.service.AlcoholService
+import will.of.d.sulsul.title.dto.TitleDto
 
 @RestController
 class UserController(
@@ -15,27 +17,15 @@ class UserController(
         return MeRes(
             nickname = user.kakaoNickname,
             drinkingLimits = user.drinkingLimit?.let {
-                drinkService.calculateDrinkingLimits(it).map { DrinkLimit(type = it.drink.type, glass = it.glass) }
+                drinkService.calculateDrinkingLimits(it).map { DrinkingLimitDto(drinkType = it.drink.type, glass = it.glass) }
             },
-            title = user.title?.let { TitleRes(it.text, it.subText, it.cardImageUrl, it.badgeImageUrl) }
+            title = user.title?.let { TitleDto(it.text, it.subText, it.cardImageUrl, it.badgeImageUrl) }
         )
     }
 }
 
 data class MeRes(
     val nickname: String,
-    val drinkingLimits: List<DrinkLimit>?,
-    val title: TitleRes?
-)
-
-data class DrinkLimit(
-    val type: String,
-    val glass: Int
-)
-
-data class TitleRes(
-    val title: String,
-    val subTitle: String,
-    val cardImageUrl: String,
-    val badgeImageUrl: String
+    val drinkingLimits: List<DrinkingLimitDto>?,
+    val title: TitleDto?
 )
