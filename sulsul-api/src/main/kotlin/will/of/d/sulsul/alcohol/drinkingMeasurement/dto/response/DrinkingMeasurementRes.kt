@@ -11,8 +11,13 @@ class DrinkingMeasurementRes(
     val id: String,
     @Schema(description = "유저가 총 마신 술의 잔", example = "4")
     val totalDrinkGlasses: Int,
+
     @Schema(description = "칭호", example = "미쳤다")
     val title: String,
+
+    @Schema(description = "카드 이미지 url", example = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/card_soju.png")
+    val drinkCardImageUrl: String,
+
     @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16.9")
     val averageAlcoholPercent: Double,
 
@@ -36,6 +41,7 @@ class DrinkingMeasurementRes(
                 id = drinkingMeasurement.id.toString(),
                 totalDrinkGlasses = drinkingMeasurement.totalDrinkGlasses,
                 title = title.subText,
+                drinkCardImageUrl = drinkingMeasurement.drinkCardImageUrl,
                 averageAlcoholPercent = drinkingMeasurement.averageAlcoholContent,
                 extraGlasses = drinkingMeasurement.extraGlasses,
                 drinkingDuration = drinkingMeasurement.drinkingDuration,
