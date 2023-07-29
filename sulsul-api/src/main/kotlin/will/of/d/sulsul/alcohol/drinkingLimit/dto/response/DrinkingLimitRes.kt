@@ -20,7 +20,7 @@ data class DrinkingLimitRes(
     val totalAlcoholAmount: Int
 ) {
     companion object {
-        fun of(drinkingLimit: DrinkingLimit): DrinkingLimitRes {
+        fun of(drinkingLimit: DrinkingLimitEntity): DrinkingLimitRes {
             val ownerDrink = DrinkRes(drinkingLimit.drinkType, drinkingLimit.glass)
             val ownerTitle = Title.defineTitleByAlcoholAmount(drinkingLimit.alcoholAmount)
             val otherDrinks = createOtherDrinks(ownerDrink, drinkingLimit.alcoholAmount)
@@ -29,7 +29,7 @@ data class DrinkingLimitRes(
                 drink = DrinkRes(drinkingLimit.drinkType, drinkingLimit.glass),
                 title = ownerTitle.text,
                 otherDrinks = otherDrinks,
-                totalAlcoholAmount = drinkingLimitEntity.alcoholAmount
+                totalAlcoholAmount = drinkingLimit.alcoholAmount
             )
         }
 
