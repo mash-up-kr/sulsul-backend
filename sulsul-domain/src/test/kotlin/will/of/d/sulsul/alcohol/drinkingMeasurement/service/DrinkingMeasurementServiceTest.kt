@@ -29,7 +29,8 @@ class DrinkingMeasurementServiceTest(
                     averageAlcoholContent = 20.0,
                     drinks = drinks,
                     totalDrinkGlasses = 15,
-                    drankAt = LocalDateTime.now()
+                    drankAt = LocalDateTime.now(),
+                    extraGlasses = 4
                 )
             )
         }

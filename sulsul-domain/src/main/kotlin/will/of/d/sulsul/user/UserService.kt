@@ -1,11 +1,13 @@
 package will.of.d.sulsul.user
 
 import org.springframework.stereotype.Service
+import will.of.d.sulsul.discord.DiscordService
 import will.of.d.sulsul.log.Logger
 
 @Service
 class UserService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val discordService: DiscordService
 ) {
 
     companion object : Logger
@@ -21,6 +23,7 @@ class UserService(
                 User.from(it)
             }.also {
                 log.info("signup ${user.kakaoUserId}")
+                discordService.send("hello")
             }
     }
 }

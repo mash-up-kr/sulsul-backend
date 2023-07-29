@@ -1,4 +1,4 @@
 spring:
   profiles:
-    include: mongo
+    include: mongo, discord
     default: local
