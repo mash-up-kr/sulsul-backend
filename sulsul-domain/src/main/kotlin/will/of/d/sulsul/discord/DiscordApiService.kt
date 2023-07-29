@@ -9,17 +9,17 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Repository
 class DiscordApiService(
-    @Value("\${discord.token}") private val token: String,
-    @Value("\${discord.channelId}") private val channelId: String,
+    @Value("\${discord.token}") val token: String,
+    @Value("\${discord.channel-id}") private val channelId: String,
     @Qualifier("discordWebClient") private val webClient: WebClient
 ) {
 
-    fun send(msg: String): Map<*, *>? {
+    fun send(msg: String): String {
         return webClient.post()
             .body(BodyInserters.fromValue(SendReqDto(message = msg, token = token, channelId = channelId)))
             .retrieve()
-            .bodyToMono(Map::class.java)
-            .block()
+            .bodyToMono(String::class.java)
+            .block()!!
     }
 }
 

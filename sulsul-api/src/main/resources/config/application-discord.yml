@@ -3,9 +3,9 @@ spring:
     activate:
       on-profile: local
 discord:
-  base-url: https://m4d4vhv3kocolhbv5q2e4jcpmy0jklwx.lambda-url.ap-northeast-2.on.aws/
   token: ENC(XeEVVs3yISRl6nS+0ceY0cuOc7zs5Z1+b0k8U8hE2zVEoOtM5MVJg7kdHMirw/9Sk6im2Bueytc57ICJ4ZeZBNU59mwG2eGHTDeb8zqxUBAS6wbhxq6zalRnxWkNOWPyfr1IMi8USSHjg5f3Dnj8pQ==)
   channel-id: 1129654391444623431
+  base-url: "https://m4d4vhv3kocolhbv5q2e4jcpmy0jklwx.lambda-url.ap-northeast-2.on.aws/"
 
 ---
 
@@ -14,6 +14,6 @@ spring:
     activate:
       on-profile: prod
 discord:
-  base-url: https://m4d4vhv3kocolhbv5q2e4jcpmy0jklwx.lambda-url.ap-northeast-2.on.aws/
   token: ENC(XeEVVs3yISRl6nS+0ceY0cuOc7zs5Z1+b0k8U8hE2zVEoOtM5MVJg7kdHMirw/9Sk6im2Bueytc57ICJ4ZeZBNU59mwG2eGHTDeb8zqxUBAS6wbhxq6zalRnxWkNOWPyfr1IMi8USSHjg5f3Dnj8pQ==)
   channel-id: 1130163570496250038
+  base-url: "https://m4d4vhv3kocolhbv5q2e4jcpmy0jklwx.lambda-url.ap-northeast-2.on.aws/"
