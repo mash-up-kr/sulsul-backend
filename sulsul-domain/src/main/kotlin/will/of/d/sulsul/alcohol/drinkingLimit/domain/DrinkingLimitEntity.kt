@@ -26,17 +26,22 @@ data class DrinkingLimitEntity(
     val updatedDate: LocalDateTime = LocalDateTime.now()
 ) {
     companion object {
-        fun from(drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
-            val drink: Drink? = Drink::type findBy drinkingLimitVO.drinkType
+        fun from(kakaoUserId: Long, drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
+            val drink: Drink? = Drink::type findBy drinkingLimitVO.drink
 
             return DrinkingLimitEntity(
-                kakaoUserId = drinkingLimitVO.kakaoUserId,
-                drinkType = drinkingLimitVO.drinkType,
+                kakaoUserId = kakaoUserId,
+                drinkType = drinkingLimitVO.drink.type,
                 glass = drinkingLimitVO.glass,
                 alcoholAmount = drink!!.alcoholAmountPerGlass * drinkingLimitVO.glass
             )
         }
     }
+
+    fun toVO() = DrinkingLimitVO(
+        drink = (Drink::type findBy drinkType)!!,
+        glass = this.glass
+    )
 
     fun createTitle(): TitleOfDrinkingLimit {
         return when (this.glass) {

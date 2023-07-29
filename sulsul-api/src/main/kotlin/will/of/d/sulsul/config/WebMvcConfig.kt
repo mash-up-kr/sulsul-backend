@@ -17,7 +17,6 @@ class WebMvcConfig(
         registry.addInterceptor(authenticationInterceptor)
             .excludePathPatterns("/health")
             .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**")
-            .excludePathPatterns("/api/v1/drinkingLimit/share")
             .excludePathPatterns("/api/v1/title")
     }
 

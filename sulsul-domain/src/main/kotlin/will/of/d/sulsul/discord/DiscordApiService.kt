@@ -9,8 +9,8 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Repository
 class DiscordApiService(
-    @Value("\${discord.token}") val token: String,
-    @Value("\${discord.channel-id}") private val channelId: String,
+    @Value("\${discord.token:token}") val token: String,
+    @Value("\${discord.channel-id:channel}") private val channelId: String,
     @Qualifier("discordWebClient") private val webClient: WebClient
 ) {
 
