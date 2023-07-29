@@ -21,7 +21,7 @@ class UserController(
             drinkingLimits = user.drinkingLimit?.let {
                 drinkService.calculateDrinkingLimits(it).map { DrinkingLimitDto(drinkType = it.drink.type, glass = it.glass) }
             },
-            title = user.title?.let { TitleDto(it.text, it.subText, it.cardImageUrl, it.badgeImageUrl) }
+            title = user.title?.let { TitleDto.from(it) }
         )
     }
 }
