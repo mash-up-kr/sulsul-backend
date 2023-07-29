@@ -27,13 +27,11 @@ data class DrinkingLimitEntity(
 ) {
     companion object {
         fun from(kakaoUserId: Long, drinkingLimitVO: DrinkingLimitVO): DrinkingLimitEntity {
-            val drink: Drink? = Drink::type findBy drinkingLimitVO.drink
-
             return DrinkingLimitEntity(
                 kakaoUserId = kakaoUserId,
                 drinkType = drinkingLimitVO.drink.type,
                 glass = drinkingLimitVO.glass,
-                alcoholAmount = drink!!.alcoholAmountPerGlass * drinkingLimitVO.glass
+                alcoholAmount = drinkingLimitVO.drink.alcoholAmountPerGlass * drinkingLimitVO.glass
             )
         }
     }
