@@ -25,6 +25,10 @@ class AlcoholService {
         return drinkingLimitVO.drink.alcoholAmountPerGlass * drinkingLimitVO.glass
     }
 
+    fun calculateAlcohol(drinkingAmounts: List<DrinkingAmountVO>): Int {
+        return drinkingAmounts.sumOf { (Drink::type findBy it.drinkType)!!.alcoholAmountPerGlass * it.glasses }
+    }
+
     fun calculateDrinkingMeasurementInfo(drinks: List<DrinkingAmountVO>): DrinkingMeasurementInfo {
         var averageAlcoholPercent = 0.0
         var totalCalorie = 0

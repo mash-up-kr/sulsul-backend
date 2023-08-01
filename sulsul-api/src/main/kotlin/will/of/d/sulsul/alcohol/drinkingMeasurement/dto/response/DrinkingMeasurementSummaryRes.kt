@@ -17,7 +17,9 @@ class DrinkingMeasurementSummaryRes(
     @Schema(description = "유저가 마신 날짜", example = "2021-08-20T15:00:00")
     val drankAt: LocalDateTime,
     @Schema(description = "유저가 마신 술의 종류와 잔 수", example = "[{\"drinkType\":\"소주\",\"glasses\":4}]")
-    val drinks: List<Drinks>
+    val drinks: List<Drinks>,
+    @Schema(description = "칭호 이름", example = "미쳤다")
+    val subTitle: String
 ) {
     companion object {
         fun of(drinkingMeasurement: DrinkingMeasurement): DrinkingMeasurementSummaryRes {
@@ -33,7 +35,8 @@ class DrinkingMeasurementSummaryRes(
                 totalAlcoholAmount = totalAlcoholAmount,
                 totalDrinkGlasses = drinkingMeasurement.totalDrinkGlasses,
                 drankAt = drinkingMeasurement.drankAt,
-                drinks = drinkingMeasurement.drinks
+                drinks = drinkingMeasurement.drinks,
+                subTitle = drinkingMeasurement.subTitle
             )
         }
     }

@@ -32,7 +32,8 @@ data class DrinkingMeasurement(
     val averageAlcoholContent: Double,
     val drinks: List<Drinks>,
     val totalDrinkGlasses: Int,
-    val drankAt: LocalDateTime
+    val drankAt: LocalDateTime,
+    val subTitle: String
 ) {
     companion object {
         fun from(
@@ -45,7 +46,8 @@ data class DrinkingMeasurement(
             averageAlcoholContent: Double,
             totalDrinkGlasses: Int,
             drinks: List<Drinks>,
-            drankAt: LocalDateTime
+            drankAt: LocalDateTime,
+            subTitle: String
         ): DrinkingMeasurement {
             return DrinkingMeasurement(
                 userId = userId,
@@ -57,7 +59,8 @@ data class DrinkingMeasurement(
                 totalDrinkGlasses = totalDrinkGlasses,
                 drinks = drinks,
                 alcoholAmount = alcoholAmount,
-                drankAt = drankAt
+                drankAt = drankAt,
+                subTitle = subTitle
             )
         }
     }

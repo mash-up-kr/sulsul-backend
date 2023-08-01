@@ -10,6 +10,7 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.repository.DrinkingMeasureme
 import will.of.d.sulsul.alcohol.drinkingMeasurement.vo.DrinkingMeasurementVO
 import will.of.d.sulsul.drink.domain.Drink
 import will.of.d.sulsul.drink.service.AlcoholService
+import will.of.d.sulsul.title.domain.Title
 import java.time.Duration
 import java.time.LocalDateTime
 
@@ -38,6 +39,9 @@ class DrinkingMeasurementService(
             todayAlcoholAmout = drinkingMeasurementInfo.totalAlcoholAmount
         )
 
+        val alcohol = alcoholService.calculateAlcohol(drinkingMeasurementVO.drinks)
+        val subTitle = Title.defineTitleByAlcoholAmount(alcohol).subText
+
         val drinkCardImageUrl = alcoholService.defineDrinkCardImageUrl(drinks)
 
         val document = DrinkingMeasurement.from(
@@ -50,7 +54,8 @@ class DrinkingMeasurementService(
             averageAlcoholContent = drinkingMeasurementInfo.averageAlcoholPercent,
             totalDrinkGlasses = totalDrinkGlasses,
             drinks = drinks.map { Drinks.from(it.drinkType, it.glasses) },
-            drankAt = drinkingStartTime
+            drankAt = drinkingStartTime,
+            subTitle = subTitle
         )
 
         return drinkingMeasurementRepository.save(document)
