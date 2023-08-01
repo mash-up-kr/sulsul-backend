@@ -30,7 +30,10 @@ class DrinkingMeasurementServiceTest(
                     drinks = drinks,
                     totalDrinkGlasses = 15,
                     drankAt = LocalDateTime.now(),
-                    extraGlasses = 4
+                    extraGlasses = 4,
+                    drinkCardImageUrl =
+                    "",
+                    subTitle = ""
                 )
             )
         }

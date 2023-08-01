@@ -1,5 +1,6 @@
 package will.of.d.sulsul.auth
 
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -19,7 +20,7 @@ class KakaoAuthServiceTest(
         }
     }
 
-//    @Disabled("20230610 기준으로 성공 확인. 시간이 지나면 token expired 되어서 반드시 실패하므로 비활성화")
+    @Disabled("20230610 기준으로 성공 확인. 시간이 지나면 token expired 되어서 반드시 실패하므로 비활성화")
     @Test
     fun `valid token`() {
         assertDoesNotThrow {
@@ -27,7 +28,7 @@ class KakaoAuthServiceTest(
         }
     }
 
-//    @Disabled("구현 확인용 테스트. tken expired 시 동작하지 않으므로 비활성화")
+    @Disabled("구현 확인용 테스트. tken expired 시 동작하지 않으므로 비활성화")
     @Test
     fun testGetUserProfile() {
         val body = kakaoAuthService.getUserProfile(accessToken)

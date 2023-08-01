@@ -5,6 +5,7 @@ import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.DrinkingMeasurement
 import will.of.d.sulsul.alcohol.drinkingMeasurement.domain.Drinks
 import will.of.d.sulsul.title.domain.Title
 import java.time.LocalDateTime
+import kotlin.math.round
 
 class DrinkingMeasurementRes(
     @Schema(description = "식별 id", example = "6481c97405e8335a58bc4337")
@@ -18,8 +19,8 @@ class DrinkingMeasurementRes(
     @Schema(description = "카드 이미지 url", example = "https://sulsul-backend.s3.ap-northeast-2.amazonaws.com/static/image/drink/card_soju.png")
     val drinkCardImageUrl: String,
 
-    @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16.9")
-    val averageAlcoholPercent: Double,
+    @Schema(description = "유저가 마신 술의 평균 알콜 도수", example = "16")
+    val averageAlcoholPercent: Int,
 
     @Schema(description = "평균 주량보다 몇 잔 더 마셨는지 나타내는 필드", example = "4")
     val extraGlasses: Int,
@@ -42,7 +43,7 @@ class DrinkingMeasurementRes(
                 totalDrinkGlasses = drinkingMeasurement.totalDrinkGlasses,
                 title = title.subText,
                 drinkCardImageUrl = drinkingMeasurement.drinkCardImageUrl,
-                averageAlcoholPercent = drinkingMeasurement.averageAlcoholContent,
+                averageAlcoholPercent = round(drinkingMeasurement.averageAlcoholContent).toInt(),
                 extraGlasses = drinkingMeasurement.extraGlasses,
                 drinkingDuration = drinkingMeasurement.drinkingDuration,
                 alcoholCalorie = drinkingMeasurement.alcoholCalorie,
