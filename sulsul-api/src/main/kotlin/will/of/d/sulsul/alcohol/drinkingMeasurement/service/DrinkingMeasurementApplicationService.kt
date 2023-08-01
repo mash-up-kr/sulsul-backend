@@ -32,7 +32,7 @@ class DrinkingMeasurementApplicationService(
     fun getMeasurementReportList(userId: Long): DrinkingMeasurementListRes {
         val drinkingMeasurementList: List<DrinkingMeasurement> = drinkingMeasurementService.findAllByUserId(userId)
         return DrinkingMeasurementListRes(
-            drinkingMeasurementList.map { DrinkingMeasurementSummaryRes.of(it) }
+            drinkingMeasurementList.map { DrinkingMeasurementSummaryRes.of(it) }.sortedByDescending { it.drankAt }
         )
     }
 
