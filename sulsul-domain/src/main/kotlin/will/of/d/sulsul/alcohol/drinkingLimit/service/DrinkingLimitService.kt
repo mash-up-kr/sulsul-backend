@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated
 import will.of.d.sulsul.alcohol.drinkingLimit.domain.DrinkingLimitEntity
 import will.of.d.sulsul.alcohol.drinkingLimit.repository.DrinkingLimitRepository
 import will.of.d.sulsul.alcohol.drinkingLimit.vo.DrinkingLimitVO
+import will.of.d.sulsul.drink.domain.Drink
 
 @Service
 @Validated
@@ -24,6 +25,6 @@ class DrinkingLimitService(
 
     fun getAlcoholAmount(kakaoUserId: Long): Int {
         val document = drinkingLimitRepository.findFirstByKakaoUserIdOrderByCreatedAtDesc(kakaoUserId)
-        return document!!.alcoholAmount
+        return document?.alcoholAmount ?: (Drink.SOJU.alcoholAmountPerGlass * 7)
     }
 }
