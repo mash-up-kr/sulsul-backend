@@ -21,7 +21,9 @@ class UserApplicationService(
             return userService.getUser(tokenInfo.id) ?: run {
                 val kakaoAccount = getKakaoAccount(accessToken)
                 val user = User(kakaoUserId = tokenInfo.id, kakaoAccount.profile.nickname)
-                userService.signup(user)
+                userService.signup(user).also {
+                    log.debug("User created. ${it.kakaoUserId}")
+                }
             }
         } catch (e: Exception) {
             log.debug("Failed to authorize user. exception: {}", e)
@@ -39,6 +41,8 @@ class UserApplicationService(
                 drinkingLimit = drinkingLimitVO.getAlcoholAmount(),
                 title = title
             )
-        )
+        ).also {
+            log.debug("User upserted. ${it.kakaoUserId}")
+        }
     }
 }

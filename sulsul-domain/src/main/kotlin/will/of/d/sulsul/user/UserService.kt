@@ -17,13 +17,11 @@ class UserService(
     }
 
     fun signup(user: User): User {
-        // TODO: 회원가입 시 Discord bot 알림
         return userRepository.save(UserEntity.from(user))
             .let {
                 User.from(it)
             }.also {
-                log.info("signup ${user.kakaoUserId}")
-                discordService.send("hello")
+                discordService.send("새로운 술친구(${user.kakaoUserId}}) 등장!! 벌써 ${userRepository.count()}명 쨰야 +_+")
             }
     }
 
