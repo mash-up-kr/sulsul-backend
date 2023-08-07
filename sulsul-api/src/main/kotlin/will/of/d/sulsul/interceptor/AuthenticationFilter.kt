@@ -14,10 +14,11 @@ class AuthenticationFilter(
     private val userApplicationService: UserApplicationService
 ) : OncePerRequestFilter() {
 
-    private val excludePaths = listOf("/api/v1/drinkingLimit", "/health", "/swagger-ui", "/v3/api-docs")
+    private val excludePaths = listOf("/health", "/swagger-ui", "/v3/api-docs")
+    private val sharePaths = listOf("/api/v1/drinkingLimit")
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        if (!request.isExcludePath()) {
+        if (!request.isExcludePath() && !request.isSharePath()) {
             val accessToken = request.getAccessToken()
             if (accessToken == null && !request.isExcludePath()) {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "token is not exists or not bearer type")
@@ -41,6 +42,10 @@ class AuthenticationFilter(
 
     private fun HttpServletRequest.isExcludePath(): Boolean {
         return excludePaths.any { this.requestURI.startsWith(it) }
+    }
+
+    private fun HttpServletRequest.isSharePath(): Boolean {
+        return sharePaths.any { this.requestURI.startsWith(it) && this.method.startsWith("GET") }
     }
 
     private fun HttpServletRequest.getAccessToken(): String? {
