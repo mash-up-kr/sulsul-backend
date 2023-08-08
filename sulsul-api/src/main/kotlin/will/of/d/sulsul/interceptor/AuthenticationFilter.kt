@@ -26,7 +26,7 @@ class AuthenticationFilter(
             }
 
             userApplicationService.getUserOrCreate(accessToken ?: "unvalid token")
-                ?.let {
+                ?.also {
                     UserContextHolder.set(it)
                 }
                 ?: run {
