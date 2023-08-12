@@ -35,3 +35,5 @@
   * PR 요청 후 본인의 작업 내용에 풍부한 설명을 코멘트로 남겨둔다.  
 * commit convention
   * https://gist.github.com/stephenparish/9941e89d80e2bc58a153
+
+trigger
